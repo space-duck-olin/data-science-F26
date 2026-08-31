@@ -1,0 +1,124 @@
+---
+title: "Setup: Types"
+author: Zachary del Rosario
+date: 2020-06-26
+output: github_document
+time: 10
+reading: 0
+---
+
+# Setup: Types
+
+*Purpose*: Vectors can hold data of only one *type*. While this isn't a course on computer science, there are some type "gotchas" to look out for when doing data science. This exercise will help us get ahead of those issues.
+
+*Reading*: (None, this is the reading)
+
+```{r setup, include=FALSE}
+# knitr options
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r library}
+library(tidyverse)
+
+```
+
+## Data Types
+
+Any time we store data in a computer, we need to work with *types*. A type is a system for representing a class of data inside our computer. Types are important because they can muck up our analysis. For instance, we obviously can't perform addition with the number 1 and the letter "a"
+
+```{r}
+## No need to edit; uncomment and run
+# "a" + 1
+```
+
+However, we *can* "add" the letter "a" and the *string* "1":
+
+```{r}
+str_c("a", "1")
+```
+
+Thankfully, there are only a few data types we need to care about:
+
+- *Floating point numbers* allow us to represent decimal values. This is the default type for numbers in R.
+- *Integers* are integers (they have no decimal value). To specify an integer, we have to include an `L` character; for instance, `1L`.
+- *Booleans* are 1's and 0's. In R we specify these using `TRUE` and `FALSE`, which are the same as `1` and `0`:
+
+```{r}
+TRUE == 1
+FALSE == 0
+```
+
+
+- *Strings* can include just about any kind of character, so long as we enclose them with a pair of quotation marks "":
+
+```{r}
+nihongo <- "私は大学生です" # "I'm a college student"
+nihongo
+```
+
+### Variables vs Strings
+
+One common issue is confusing a *string* with a *variable name*. This is further complicated by the fact that we can store strings *in* variables.
+
+### __q1__ Describe what is wrong with the code below.
+
+```{r q1-task, eval=FALSE}
+## TASK: Describe what went wrong here
+## Set our airport
+airport <- "BOS"
+
+## Check our airport value
+airport == ATL
+```
+
+**Observations**:
+
+- Write your explanation here
+
+## Casting
+
+Sometimes our data will not be in the form we want; in this case we may need to *cast* the data to another format.
+
+- `as.integer(x)` converts to integer
+- `as.numeric(x)` converts to real (floating point)
+- `as.character(x)` converts to character (string)
+- `as.logical(x)` converts to logical (boolean)
+- `as.factor(x)` converts to a factor (fixed values)
+
+For example, sometimes our numerical data gets loaded as a string, in which case we'll need to cast it back to numbers.
+
+### __q2__ Cast the following vector `v_string` to integers.
+
+```{r q2-task}
+v_string <- c("00", "45", "90")
+v_integer <- NA_real_
+```
+
+Use the following test to check your work.
+
+```{r q2-tests}
+## NOTE: No need to change this!
+assertthat::assert_that(
+  assertthat::are_equal(
+                v_integer,
+                c(0L, 45L, 90L)
+  )
+)
+print("Great job!")
+```
+
+## Statistical "types"
+
+In addition to computer science data types, we will talk about variables in terms that statisticians use. There are only a few key "statistical types":
+
+- **Continuous variables** can have infinitely small differences between values, such as real numbers.
+- **Discrete variables** have a minimum difference between values, such as integers.
+- **Factors** (or **categoricals**) take only one of a fixed set of values. This could be a set of numbers {1, 2, 3}, or a set of categories {red, blue, green}. 
+  - The fixed set of values are sometimes called *factor levels*.
+
+<!-- include-exit-ticket -->
+# Exit Ticket
+<!-- -------------------------------------------------- -->
+
+Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-setup06-types-assignment.Rmd).
