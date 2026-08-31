@@ -2,6 +2,8 @@
 
 # data-science-curriculum
 
+Emily Boyd 
+I am editing this reading me. 
 This is a curriculum of **open-source** data science exercises, intended to take a student from zero coding experience to basic data science literacy. These exercises are heavily inspired by the (discontinued) [Data Challenge Lab](https://dcl-docs.stanford.edu/home/) at Stanford University and rely on the [Tidyverse](https://www.tidyverse.org/).
 
 Please see our [JOSE paper](https://jose.theoj.org/papers/10.21105/jose.00117) for more info.
