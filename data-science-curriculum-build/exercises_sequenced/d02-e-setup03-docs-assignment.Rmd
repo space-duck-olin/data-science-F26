@@ -31,6 +31,7 @@ associated with `"dplyr"`. What vignettes are available?
 
 ```{r q1-task, eval=FALSE}
 ## TODO: Re-write the code above following the tidyverse style guide
+vignette("dplyr")
 ```
 
 
@@ -48,6 +49,7 @@ iris %>%
   as_tibble() %>%
   filter(
     # TODO: Filter on Species "setosa"
+    Species == "setosa"
   )
 ```
 
@@ -56,7 +58,7 @@ we know the verbs (functions) we want to use, we need more specific help.
 
 ### __q3__ Remember back to `e-setup02-functions`; how do we look up help for a
 specific function?
-
+?function
 
 Sometimes we'll be working with a function, but we won't *quite* know how to get
 it to do what we need. In this case, consulting the function's documentation can
@@ -67,7 +69,13 @@ question: How could we `filter` the `iris` dataset to return only those rows
 with `Sepal.Length` between `5.1` and `6.4`?
 
 ```{r q3-task}
+?filter
 ## TODO: Consult the docs; Write your code here
+iris %>%
+  as_tibble() %>%
+  filter(
+    Sepal.Length > '5.1' & Sepal.Length < '6.4'
+  )
 ```
 
 
@@ -78,8 +86,13 @@ learn more.
 
 ### __q5__ Look up the documentation on `cut_number`; what package does it come
 from? What about `parse_number()`? What about `row_number()`?
+```{r}
+?cut_number
+?parse_number
+?row_number
+```
 
-
+cut number is from ggplot2. parse_number is from readr. row number is from dplyr
 <!-- include-exit-ticket -->
 # Exit Ticket
 <!-- -------------------------------------------------- -->
