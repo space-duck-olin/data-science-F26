@@ -48,15 +48,20 @@ Some nomenclature:
 
 ### __q1__ Load the `tidyverse` and inspect the `diamonds` dataset. What do the
 `cut`, `color`, and `clarity` variables mean?
+cut is the quality of the cut, color is the diamond color, clarity is the measurement of how clear the diamond from I1 to IF
 
 *Hint*: You can run `?diamonds` to get information on a built-in dataset.
 
 ```{r load-packages, eval=FALSE}
+?diamonds
 ```
 
 ### __q2__ Run `glimpse(diamonds)`; what variables does `diamonds` have?
+```{r}
+glimpse(diamonds)
+```
 
-
+diamonds has 10 variables titled: carat, cut, color, clarity, depth, table, price, x,y,z.
 ### __q3__ Run `summary(diamonds)`; what are the common values for each of the
 variables? How widely do each of the variables vary?
 
@@ -70,7 +75,7 @@ summary(diamonds)
 **Observations**:
 
 - (Write your observations here!)
-
+most diamonds are below 1 carat. Diamonds are not perfect. 
 You should always analyze your dataset in the simplest way possible, build
 hypotheses, and devise more specific analyses to probe those hypotheses. The
 `glimpse()` and `summary()` functions are two of the simplest tools we have.
@@ -103,6 +108,7 @@ turn it into `diamonds %>% glimpse()`.
 ### __q4__ Use the pipe operator to re-write `summary(diamonds)`.
 
 ```{r q4-task}
+diamonds %>% summary(diamonds)
 ```
 
 ## Reading Data
@@ -113,7 +119,7 @@ So far we've only been looking at built-in datasets. Ultimately, we'll want to r
 ### __q5__ Use the function `read_csv()` to load the file `"./data/tiny.csv"`.
 
 ```{r q5-task}
-
+df_q5 <- read_csv("./data/tiny.csv")
 df_q5
 ```
 
