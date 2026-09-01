@@ -1,6 +1,6 @@
 ---
 title: "Getting Started: Diamonds"
-author: "(Your name here)"
+author: "Emily Boyd"
 date: 2020-
 output:
   github_document:
@@ -12,7 +12,6 @@ prerequisites:
 *Purpose*: Throughout this course, you'll complete a large number of *exercises* and *challenges*. Exercises are meant to introduce content with easy-to-solve problems, while challenges are meant to make you think more deeply about and apply the content. The challenges will start out highly-scaffolded, and become progressively open-ended.
 
 In this challenge, you will go through the process of exploring, documenting, and sharing an analysis of a dataset. We will use these skills again and again in each challenge. 
-
 *Note*: You will have seen all of these steps in `e-vis00-basics`. This challenge is *primarily* a practice run of the submission system. The Data Exploration part should be very simple.
 
 <!-- include-rubric -->
@@ -55,22 +54,47 @@ In this first stage, you will explore the `diamonds` dataset and document your o
 ```{r q1-task}
 ## TASK: Plot `price` vs `carat` below
 ## Your code here!
+?diamonds 
+glimpse(diamonds)
+
+ggplot(            # 1. Starting a ggplot
+  data = diamonds  # 2. Dataset to visualize
+) +                # 3. Adding elements to the plot
+  geom_point(      # 4. Geometry
+    mapping = aes( # 5. `Aes`thetic mapping
+      x = carat,   # 5.1. Mapping the `x` variable
+      y = price    # 5.2. Mapping the `y` variable
+    )
+  )
 ```
 
 **Observations**:
 
-- (Write your observations here!)
+- In general, the higher the carat the higher the price.
+- There are more diamonds at a lower carat and lower price than higher carat and higher price. 
 
 ### __q2__ Create a visualization showing variables `carat`, `price`, and `cut` simultaneously. Experiment with which variable you assign to which aesthetic (`x`, `y`, etc.) to find an effective visual.
 
 ```{r q2-task}
 ## TASK: Plot `price`, `carat`, and `cut` below
-## Your code here!
+ggplot(
+  data = diamonds
+    ) + 
+  geom_point(
+    mapping = aes(
+      x = carat, 
+      y = price, 
+      colour = cut
+    )
+  )
 ```
 
 **Observations**:
 
-- (Write your observations here!)
+- In general for diamonds of the same carat, a higher quality cut will lead to a higher price. 
+- Diamonds of carats over 3 have high prices with varied cut quality. 
+- There are more diamonds at a lower carat and lower price than higher carat and higher price.
+- 
 
 
 # Communication
