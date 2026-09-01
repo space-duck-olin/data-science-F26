@@ -22,15 +22,22 @@ knitr::opts_chunk$set(echo = TRUE)
 ### __q1__ Inspect a dataset
 
 Inspect the `diamonds` dataset. What do the `cut`, `color`, and `clarity` variables mean?
+color is the color from D(best) to J(worst)
+cut is quality from ideal to fair
+clarity is the measurement of how clear the diamond is from IF(best) to I1
 
 *Hint*: We learned how to inspect a dataset in `e-data-00-basics`!
 
 ```{r q1-task, eval=FALSE}
+?diamonds 
 ```
 
 ### __q2__ Standard checks
 
 Use your "standard checks" to determine what variables the dataset has.
+```{r}
+glimpse(diamonds)
+```
 
 
 Now that we have the list of variables in the dataset, we know what we can visualize!
@@ -73,12 +80,21 @@ Using `ggplot`, visualize `price` vs `carat` with points. What trend do you obse
 
 ```{r q3-task}
 ## TODO: Complete this code
-ggplot(diamonds)
+ggplot(            # 1. Starting a ggplot
+  data = diamonds  # 2. Dataset to visualize
+) +                # 3. Adding elements to the plot
+  geom_point(      # 4. Geometry
+    mapping = aes( # 5. `Aes`thetic mapping
+      x = carat,   # 5.1. Mapping the `x` variable
+      y = price    # 5.2. Mapping the `y` variable
+    )
+  )
+
 ```
 
 **Observations**:
 
-- (Write your observations here!)
+- more carat mean more money
 
 ## A note on *aesthetics*
 
@@ -106,6 +122,10 @@ As with any R function, we can consult the documentation to learn more.
 ### __q4__ Read the docs
 
 Look up the documentation for `geom_point()`, and scroll down to the *Aesthetics* section. What aesthetics (other than `x` and `y`) does `geom_point()` accept?
+alpha, colour, fill, group, shape,size,stroke
+```{r}
+?geom_point
+```
 
 ### __q5__ Visualize a third variable
 
@@ -115,12 +135,12 @@ Adapt your code from q3 to visualize `price`, `carat`, and `cut` simultaneously.
 
 ```{r q4-task}
 ## TODO: Complete this code
-ggplot(diamonds)
+ggplot(diamonds) + geom_point(aes(x = carat, y = price, colour = cut))
 ```
 
 **Observations**:
 
-- (Write your observations here!)
+- the ideal quality diamonds tend to be smaller
 
 <!-- include-exit-ticket -->
 # Exit Ticket
