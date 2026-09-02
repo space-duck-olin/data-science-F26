@@ -74,7 +74,7 @@ airport == ATL
 
 **Observations**:
 
-- Write your explanation here
+- R is expecting ATL to be a varible while we are expecting it to be a string. To fix this code we should add quotation 
 
 ## Casting
 
@@ -92,7 +92,7 @@ For example, sometimes our numerical data gets loaded as a string, in which case
 
 ```{r q2-task}
 v_string <- c("00", "45", "90")
-v_integer <- NA_real_
+v_integer <- as.integer(v_string)
 ```
 
 Use the following test to check your work.
