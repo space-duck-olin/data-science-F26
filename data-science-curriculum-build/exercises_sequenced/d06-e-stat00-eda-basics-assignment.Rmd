@@ -36,6 +36,8 @@ library(tidyverse)
 Remember from `e02-data-basics` there were *simple checks* we're supposed to do? Do those simple checks on the diamonds dataset below.
 
 ```{r q0-task}
+?diamonds
+glimpse(diamonds)
 ```
 
 I'm going to walk you through a train of thought I had when studying the diamonds dataset.
@@ -59,7 +61,7 @@ diamonds %>%
 ```
 
 **Observations**:
-- Write your observations here!
+- That hypothesis is not true because Ideal cut has the greatest number of samples
 
 ## Hypothesis 2
 
@@ -78,7 +80,7 @@ diamonds %>%
 ```
 
 **Observations**:
-- Write your observations here!
+- This graph is not very effective at seeing if ideal diamonds are more expensive than other diamond cuts since all you see is a mostly solid black line. 
 
 The following is a set of *boxplots*; the middle bar denotes the median, the boxes denote the *quartiles* (upper and lower "quarters" of the data), and the lines and dots denote large values and outliers.
 
@@ -93,7 +95,7 @@ diamonds %>%
 ```
 
 **Observations**:
-- Write your observations here!
+- hypothesis two is not true because the highest average price is not in the ideal cuts. 
 
 ## Unraveling Hypothesis 2
 
@@ -112,7 +114,7 @@ diamonds %>%
 ```
 
 **Observations**:
-- Write your observations here!
+- Yes, this carat over cut does make sense. 
 
 Note what we just did:
 
