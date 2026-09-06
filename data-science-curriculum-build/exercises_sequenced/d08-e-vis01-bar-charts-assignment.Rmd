@@ -63,8 +63,9 @@ Convert the following `geom_bar()` plot into the same visual using `geom_col()`.
 
 ```{r q1-task}
 mpg %>%
-  ggplot(aes(trans)) +
-  geom_bar()
+  count(trans) %>%
+  ggplot(aes(x = trans, y = n)) +
+  geom_col()
 ```
 
 ## Fundamentals of the bar chart
@@ -109,7 +110,7 @@ The following code attempts to visualize `cty, hwy` from `mpg` using `geom_col()
 ```{r q2-task}
 mpg %>%
   ggplot(aes(x = cty, y = hwy)) +
-  geom_col()
+  geom_col(position = "dodge")
 ```
 
 **Observations**:
@@ -175,6 +176,7 @@ mpg %>%
 
 - Which visualization---`v1` or `v2`---enabled you to make more observations?
 - What was the difference between `v1` and `v2`?
+v2 is better as the colors say an extra level of detail that v1 does not have 
 
 ### __q4__ Fix this plot
 
@@ -184,13 +186,13 @@ The following code has a bug; it does not do what its author intended. Identify 
 
 ```{r q4-task}
 mpg %>%
-  ggplot(aes(x = manufacturer, fill = class), position = "dodge") +
-  geom_bar() +
+  ggplot(aes(x = manufacturer, fill = class)) +
+  geom_bar(position = "dodge") +
   theme(axis.text.x = element_text(angle = 270, vjust = 0.5, hjust = 0))
 ```
 
 **Observations**
-- Your observations here!
+- allows you to compair relative count
 
 ## A bit on facets
 
@@ -254,7 +256,7 @@ The following graph is hard to read. Experiment with other choices of faceting t
 mpg %>%
   ggplot(aes(x = cyl)) +
   geom_bar() +
-  facet_grid(~ manufacturer)
+  facet_wrap(~ manufacturer)
 ```
 
 <!-- include-exit-ticket -->
