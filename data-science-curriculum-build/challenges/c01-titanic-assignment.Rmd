@@ -52,11 +52,12 @@ df_titanic <- as_tibble(Titanic)
 
 ```{r q1-task}
 ## TASK: Perform a `glimpse` of df_titanic
+df_titanic %>% glimpse()
 ```
 
 **Observations**:
 
-- (List all variables here)
+- There are five columns of data. For each passenger in a given class, age and sex, the data reports how many died or survived
 
 ### __q2__ Skim the [Wikipedia article](https://en.wikipedia.org/wiki/RMS_Titanic) on the RMS Titanic, and look for a total count of souls aboard. Compare against the total computed below. Are there any differences? Are those differences large or small? What might account for those differences?
 
@@ -68,11 +69,11 @@ df_titanic %>% summarize(total = sum(n))
 
 **Observations**:
 
-- Write your observations here
+- The Wikipedia article counts states that there were 2,208 souls on board the Titanic while the data set provided sums to a total of 2201 souls on board. 
 - Are there any differences?
-  - (Your response here)
+  - Yes there is a difference of 7 souls between the Wikipedia article and the data set provided. 
 - If yes, what might account for those differences?
-  - (Your response here)
+  - Differences between the data sets could come from using different data sources. It is also possible that the given data set did not account for people who illegally got on board the Titanic and hide in rooms since the Titanic was not at full capacity. 
   - ...
 
 ### __q3__ Create a plot showing the count of persons who *did* survive, along with aesthetics for `Class` and `Sex`. Document your observations below.
@@ -81,6 +82,11 @@ df_titanic %>% summarize(total = sum(n))
 
 ```{r q3-task}
 ## TASK: Visualize counts against `Class` and `Sex`
+df_titanic_survive <- df_titanic %>%
+  filter(Survived == 'Yes')
+df_titanic_survive %>%
+  ggplot(aes(x = Class, y = n, group = Sex, colour = Sex)) +
+  geom_col(position = "dodge")
 ```
 
 **Observations**:
