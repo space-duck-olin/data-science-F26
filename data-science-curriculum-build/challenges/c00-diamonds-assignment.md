@@ -120,15 +120,13 @@ glimpse(diamonds)
     ## $ z       <dbl> 2.43, 2.31, 2.31, 2.63, 2.75, 2.48, 2.47, 2.53, 2.49, 2.39, 2.…
 
 ``` r
-ggplot(            # 1. Starting a ggplot
-  data = diamonds  # 2. Dataset to visualize
-) +                # 3. Adding elements to the plot
-  geom_point(      # 4. Geometry
-    mapping = aes( # 5. `Aes`thetic mapping
-      x = carat,   # 5.1. Mapping the `x` variable
-      y = price    # 5.2. Mapping the `y` variable
-    )
-  )
+diamonds %>%
+  ggplot(
+    mapping = aes(
+      x = carat,
+      y = price
+  )) +
+  geom_point()
 ```
 
 ![](c00-diamonds-assignment_files/figure-gfm/q1-task-1.png)<!-- -->
@@ -143,16 +141,14 @@ ggplot(            # 1. Starting a ggplot
 
 ``` r
 ## TASK: Plot `price`, `carat`, and `cut` below
-ggplot(
-  data = diamonds
-    ) + 
-  geom_point(
+diamonds %>%
+  ggplot(
     mapping = aes(
       x = carat, 
       y = price, 
-      colour = cut
-    )
-  )
+      colour = cut)
+    ) + 
+  geom_point()
 ```
 
 ![](c00-diamonds-assignment_files/figure-gfm/q2-task-1.png)<!-- -->

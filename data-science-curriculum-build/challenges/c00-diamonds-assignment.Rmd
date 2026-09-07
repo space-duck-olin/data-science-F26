@@ -56,16 +56,13 @@ In this first stage, you will explore the `diamonds` dataset and document your o
 ## Your code here!
 ?diamonds 
 glimpse(diamonds)
-
-ggplot(            # 1. Starting a ggplot
-  data = diamonds  # 2. Dataset to visualize
-) +                # 3. Adding elements to the plot
-  geom_point(      # 4. Geometry
-    mapping = aes( # 5. `Aes`thetic mapping
-      x = carat,   # 5.1. Mapping the `x` variable
-      y = price    # 5.2. Mapping the `y` variable
-    )
-  )
+diamonds %>%
+  ggplot(
+    mapping = aes(
+      x = carat,
+      y = price
+  )) +
+  geom_point()
 ```
 
 **Observations**:
@@ -77,16 +74,15 @@ ggplot(            # 1. Starting a ggplot
 
 ```{r q2-task}
 ## TASK: Plot `price`, `carat`, and `cut` below
-ggplot(
-  data = diamonds
-    ) + 
-  geom_point(
+diamonds %>%
+  ggplot(
     mapping = aes(
       x = carat, 
       y = price, 
-      colour = cut
-    )
-  )
+      colour = cut)
+    ) + 
+  geom_point()
+    
 ```
 
 **Observations**:
