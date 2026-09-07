@@ -66,7 +66,8 @@ define how you will be graded, both on an individual and team basis.
 Make sure to commit both the challenge report (`report.md` file) and
 supporting files (`report_files/` folder) when you are done! Then submit
 a link to Canvas. **Your Challenge submission is not complete without
-all files uploaded to GitHub.**
+all files uploaded to GitHub.** I have edited to make the code follow
+the style guide.
 
 ``` r
 library(tidyverse)
