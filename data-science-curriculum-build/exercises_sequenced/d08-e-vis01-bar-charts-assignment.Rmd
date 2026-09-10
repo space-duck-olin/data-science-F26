@@ -248,6 +248,20 @@ tibble(
 
 In general, if you have just one variable to facet on, you can use `facet_wrap()` as a default. If you want more control and options over your faceting, use `facet_grid()`. We'll talk more about facets in a future exercise.
 
+demo code:
+
+```{r}
+tibble(
+  x = c("A", "A", "B", "C", "C", "C")
+) |> 
+  # ggplot(aes(x)) +
+  # geom_bar()
+  count(x) |> 
+  ggplot(aes(x, n)) +
+  geom_col()
+```
+
+
 ### __q5__ Improve this plot
 
 The following graph is hard to read. Experiment with other choices of faceting to make the visual more convenient to read.

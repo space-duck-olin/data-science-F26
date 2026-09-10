@@ -150,9 +150,10 @@ df_prop %>%
     aes(
       x = Class, 
       y = Prop, 
-      fill = Sex)) +
-  geom_col(
-    position = "dodge") +
+      fill = Sex
+    )
+  ) +
+  geom_col(position = "dodge") 
   facet_grid(
     ~Age)
 
