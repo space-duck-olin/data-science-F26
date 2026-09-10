@@ -50,7 +50,9 @@ Make a histogram of `cty` fuel economy.
 
 ```{r q1-task}
 ## TASK: Make a histogram of
-mpg %>%
+mpg %>% 
+  ggplot(aes(cty)) +
+  geom_histogram()
 # TODO: Finish this code
 ```
 
@@ -118,7 +120,7 @@ Density plots are better for showing where the data tends to be located. Frequen
 
 Using the graphs generated in the chunks `q1-vis1` and `q1-vis2` below, answer:
 
-- Which `class` has the most vehicles?
+- Which `class` has the most vehicles? SUV
 - Which `class` has the broadest distribution of `cty` values?
 - Which graph---`vis1` or `vis2`---best helps you answer each question?
 
@@ -147,7 +149,8 @@ Modify `q1-vis2` to use a `facet_wrap()` on the `class`. "Free" the vertical axi
 ```{r q3-task}
 mpg %>%
   ggplot(aes(cty, color = class)) +
-  geom_density()
+  geom_density() +
+  facet_wrap(~class)
 ```
 
 In the reading, we learned that the "most important thing" to keep in mind with `geom_histogram()` and `geom_freqpoly()` is to _explore different binwidths_. We'll explore this idea in the next question.
@@ -162,7 +165,7 @@ diamonds %>%
   filter(carat < 1.1) %>%
 
   ggplot(aes(carat)) +
-  geom_histogram(binwidth = 0.01, boundary = 0.005) +
+  geom_histogram(binwidth = 0.05, boundary = 0.005) +
   scale_x_continuous(
     breaks = seq(0, 1, by = 0.1)
 

@@ -31,8 +31,10 @@ Remember the pipe `%>%`? The pipe takes an input on the left, and "inserts" it i
 What is the difference between these two versions of code? How are they the same? How are they different?
 
 ```{r q1-task}
+
 ## Version 1
 filter(diamonds, cut == "Ideal")
+
 ## Version 2
 diamonds %>% filter(cut == "Ideal")
 ```
@@ -87,7 +89,8 @@ Using `summarize()` and a logical summary function, determine the number of rows
 *Hint*: We learned about checking for equality in `e-data01-isolate`.
 
 ```{r q2-task}
-df_q2
+df_q2 <- diamonds %>% 
+    summarize(n_ideal = sum(cut == "Ideal"))
 ```
 
 The following test will verify that your `df_q2` is correct:
@@ -130,7 +133,7 @@ The function `group_by()` modifies how other dplyr verbs function. Uncomment the
 
 ```{r q3-task}
 diamonds %>%
-  ## group_by(color, clarity) %>%
+ group_by(color, clarity) %>%
   summarize(price_mean = mean(price))
 ```
 
@@ -157,7 +160,7 @@ There are many *vectorized functions* that we can use with `mutate()`. A *vector
 | Logical comp. | `<, <=, >, >=, !=, ==` |
 | Logarithms | `log(x), log2(x), log10(x)` |
 | Offsets | `lead(x), lag(x)` |
-| Cumulants | `cumsum(x), cumprod(x), cummin(x), cummax(x), cummean(x)` |
+| Cumulants | cumsum(x), cumprod(x), cummin(x), cummax(x), cummean(x) |
 | Ranking | `min_rank(x), row_number(x), dense_rank(x), percent_rank(x), cume_dist(x), ntile(x)` |
 
 ### __q4__ Comment on why the difference is so large
@@ -172,15 +175,27 @@ Assign the resulting tibble to `df_q4`, and assign the appropriate values to `co
 
 ```{r q4-task}
 ## TODO: Compute the `cov_depth` and `cov_diff` and assign the result to df_q4
-df_q4 <-
-  diamonds
+df_q4 <- 
+  diamonds %>%
+    mutate(
+      depth_computed = 100 * 2 * z / (x + y),
+      diff = depth - depth_computed
+    ) %>%
+  summarize(
+    depth_mean = mean(depth,na.rm = TRUE),
+    depth_sd = sd(depth,na.rm = TRUE),
+    cov_depth = depth_sd/depth_mean,
+    
+    diff_mean = mean(diff,na.rm =TRUE),
+    diff_sd = sd(diff,na.rm = TRUE),
+    cov_diff = diff_sd/diff_mean)
 df_q4
 ```
 
 **Observations**
 
 - Comment on the relative values of `cov_depth` and `cov_diff`.
-- Why is `cov_diff` so large?
+- Why is `cov_diff` so large? big difference comes from the large difference between meaursed and computeted
 
 The following test will verify that your `df_q4` is correct:
 
@@ -199,6 +214,11 @@ Compute the `price_mean = mean(price)`, `price_sd = sd(price)`, and `price_cov =
 
 ```{r q5-task}
 ## TODO: Assign result to df_q5
+df_q5 <- diamonds %>% group_by(cut) %>%
+    summarise(
+    price_mean = mean(price),
+    price_sd = sd(price),
+    price_cov = price_sd / price_mean)
 df_q5
 ```
 
