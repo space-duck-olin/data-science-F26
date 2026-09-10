@@ -92,7 +92,7 @@ your command line:
 
 ```{bash, eval=FALSE}
 # Move to your data science directory
-$ ~/path/to/your/data-science-work # Replace with your real directory!
+$ C:\Users\boyde\data-science-F26\data-science-curriculum-build\p01-name\data # Replace with your real directory!
 # Add the special .gitignore file
 $ touch p01-name/data/.gitignore
 ```
