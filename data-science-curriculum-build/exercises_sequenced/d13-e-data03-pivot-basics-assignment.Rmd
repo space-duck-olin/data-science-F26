@@ -55,7 +55,7 @@ cases
 
 ```{r q1-test}
 ## TODO: Modify with your multiple choice number answer
-q1_answer <- 0
+q1_answer <- 2
 
 ## NOTE: The following will test your answer
 if (((q1_answer + 56) %% 3 == 1) & (q1_answer > 0)) {
@@ -87,7 +87,7 @@ alloys
 
 ```{r q2-test}
 ## TODO: Modify with your multiple choice number answer
-q2_answer <- 0
+q2_answer <- 3
 
 ## NOTE: The following will test your answer
 if (((q2_answer + 38) %% 3 == 2) & (q2_answer > 0)) {
@@ -262,6 +262,7 @@ df_base <-
          2,      8,  "B",
          3,      7,  "C"
   )
+df_base
 ```
 
 We're going to play a game: I'm going to modify the data, and your job is to pivot it back to equal `df_base`.
@@ -290,7 +291,11 @@ Undo the modification using a single pivot. Don't worry about column order.
 
 ```{r q3-task}
 df_q3_res <-
-  df_q3 %>%
+  df_q3 %>% pivot_wider (
+    names_from = id, # Cell entries to turn into new column names
+    names_prefix = "X-",
+    values_from = value) # Values to associate with the new column(s)
+    
 ## NOTE: Add your pivot here!
 
 df_q3_res
@@ -321,7 +326,12 @@ Undo the modification using a single pivot. Don't worry about column order.
 
 ```{r q4-task}
 df_q4_res <-
-  df_q4 %>%
+  df_q4 %>% pivot_longer(
+    values_drop_na = TRUE,
+    names_to = "key",
+    values_to = "X-0",
+    cols = c(A,B,C)
+  )
 ## NOTE: Add your pivot here!
 
 df_q4_res
@@ -352,7 +362,11 @@ Undo the modification using a single pivot. Don't worry about column order.
 
 ```{r q5-task}
 df_q5_res <-
-  df_q5 %>%
+  df_q5 %>% pivot_longer(
+    cols= everything(),
+    names_to = c(".value","key"),
+    names_sep = "_"
+  )
 ## NOTE: Add your pivot here!
 
 df_q5_res
@@ -379,7 +393,7 @@ Don't forget to create a solution!
 
 ```{r q6-solution}
 df_q6_res <-
-  df_q6 %>%
+  df_q6 %>% 
 ## NOTE: Add your pivot here!
 
 df_q6_res
