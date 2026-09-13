@@ -383,7 +383,11 @@ Using a single pivot on `df_base` create your own *challenge* dataframe. You wil
 ```{r q6-task}
 ## NOTE: No need to edit; this is setup for the exercise
 df_q6 <-
-  df_base %>%
+  df_base %>% 
+    pivot_wider(
+      names_from = key,
+      values_from = 'X-1'
+  )
 ## NOTE: Add your pivot here!
 
 df_q6
@@ -393,7 +397,12 @@ Don't forget to create a solution!
 
 ```{r q6-solution}
 df_q6_res <-
-  df_q6 %>% 
+  df_q6 %>% pivot_longer(
+    values_drop_na = TRUE,
+    names_to = "key",
+    values_to = "X-1",
+    cols = c(A,B,C)
+  )
 ## NOTE: Add your pivot here!
 
 df_q6_res
