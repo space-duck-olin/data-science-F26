@@ -1,6 +1,6 @@
 ---
 title: "Aluminum Data"
-author: "(Your name here)"
+author: "Emily Boyd"
 date: 2020-
 output:
   github_document:
@@ -67,7 +67,14 @@ Note that these data are not tidy! The data in this form are convenient for repo
 ```{r q1-task}
 ## TASK: Tidy `df_stang`
 df_stang_long <-
-  df_stang
+  df_stang %>% pivot_longer(
+    values_drop_na = TRUE,
+    names_to = c(".value", "angle"),
+    names_sep = "_",
+    cols = starts_with("E") | starts_with("nu"),
+    names_transform = list(angle = as.integer),
+  ) %>% 
+  filter_out(E < 0)
 
 df_stang_long
 ```
@@ -102,20 +109,25 @@ print("Very good!")
 ### __q2__ Perform a basic EDA on the aluminum data *without visualization*. Use your analysis to answer the questions under *observations* below. In addition, add your own *specific* question that you'd like to answer about the data---you'll answer it below in q3.
 
 ```{r q2-task}
+df_stang_long %>%
+  glimpse()
+df_stang_long %>%
+  summary()
+
 ##
 ```
 
 **Observations**:
 
 - Is there "one true value" for the material properties of Aluminum?
-  - (Your response here)
+  - There is not one true value for the material properties of Aluminum
 - How many aluminum alloys are in this dataset? How do you know?
-  - (Your response here)
+  - There is only one aluminum alloy in this dataset as there is only one unique value in the alloy column.
 - What angles were tested?
-  - (Your response here)
+  - 0, 45, 90
 - What thicknesses were tested?
-  - (Your response here)
-- (Write your own question here)
+  - 0.022,0.032,0.064,0.081
+- Does nu increase with the increase in E? 
 
 ## Visualize
 <!-- ------------------------- -->
@@ -124,11 +136,15 @@ print("Very good!")
 
 ```{r q3-task}
 ## TASK: Investigate your question from q1 here
+df_stang_long %>%
+  ggplot(aes(nu,E)) +
+  geom_point() +
+  geom_smooth(method=lm)
 ```
 
 **Observations**:
 
-- (Address your question from q1 here)
+- Yes nu does increase with increases in E as demonstrated by the postive slope in the trend line. 
 
 ### __q4__ Consider the following statement:
 
@@ -142,15 +158,23 @@ df_stang_long %>%
 
   ggplot(aes(nu, E, color = as_factor(thick))) +
   geom_point(size = 3) +
+  scale_color_manual(
+    values = c(
+      "0.022" = "red",
+      "0.032" = "green",
+      "0.064" = "blue",
+      "0.081" = "yellow"
+    )
+  ) +
   theme_minimal()
 ```
 
 **Observations**:
 
 - Does this graph support or contradict the claim above?
-  - (Your response here)
+  - The graph very slightly contradicts the claim that material thickness changes the material properties
 - Is this evidence *conclusive* one way or another?
-  - (Your response here)
+  - This evidence is inconclusive one way or another as E and nu are not clustered by thickness. The thickest plates values seems to contradict the claim that a there is a single value between thickness. However, the three thinner plates do not follow the same pattern and their points are all intermixed.
 
 # References
 <!-- -------------------------------------------------- -->
