@@ -257,15 +257,43 @@ df_q2 %>%
 
 **Observations**: 
 Similarities 
-- (your responses here) 
+- Both the real and simulated charts have the same upper and lower control lines
+- Both the real and simulated lines of dots for each day. 
 Differences 
-- (your responses here)
+- The mean of each day crosses the control lines more on the real data. 
+- Real data has more outliers that are further away from the control lines. 
 
 ### **q5** You have access to a few other variables. Construct a **at least three** visualizations of `VelocityVacuum` against these other factors. Are there other patterns in the data that might help explain the difference between Michelson's estimate and `LIGHTSPEED_VACUUM`?
 
+```{r}
+df_q2 %>%
+  ggplot(aes(Distinctness,VelocityVacuum)) +
+  geom_boxplot()
+```
 **Observations**:
 
-- Make sure to record observations on your graphs!
+- Only values with distinctness 1,2 have outliers outside of the box and whisker plot. - Values with a distinctness 3 has the largest IQR range. 
+- The mean of the velocityvaccum increases as the distincness increases
+```{r}
+df_q2 %>%
+  ggplot(aes(Temp,VelocityVacuum)) +
+  geom_point()+
+  geom_smooth(method=lm)
+```
+
+
+**Observations**:
+
+- As the tempurature increases, the trend line for velocityvacuum also increases. 
+
+```{r}
+df_q2 %>%
+  ggplot(aes(VelocityVacuum,Velocity)) +
+  geom_point()
+```
+**Observations**:
+
+- The difference between VelocityVaccum and Velocity is a constant of 92 km/s. 
 
 ## Bibliography
 
