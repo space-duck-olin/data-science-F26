@@ -136,6 +136,7 @@ df_prop %>%
 **Observations**:
 
 - Write your observations here.
+  It appears that a higher percentage of female crew survived compared to the male crew. 
 - Is there anything *fishy* going on in your plot?
   - It says that 100% of 1st and 2nd class passengers survived which we know is not true. 
 

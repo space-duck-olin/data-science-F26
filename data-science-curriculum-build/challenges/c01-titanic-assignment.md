@@ -234,7 +234,8 @@ df_prop %>%
 
 **Observations**:
 
-- Write your observations here.
+- Write your observations here. It appears that a higher percentage of
+  female crew survived compared to the male crew.
 - Is there anything *fishy* going on in your plot?
   - It says that 100% of 1st and 2nd class passengers survived which we
     know is not true.
@@ -251,17 +252,45 @@ df_prop %>%
     aes(
       x = Class, 
       y = Prop, 
-      fill = Sex)) +
-  geom_col(
-    position = "dodge") +
-  facet_grid(
-    ~Age)
+      fill = Sex
+    )
+  ) +
+  geom_col(position = "dodge") 
 ```
 
     ## Warning: Removed 2 rows containing missing values or values outside the scale range
     ## (`geom_col()`).
 
 ![](c01-titanic-assignment_files/figure-gfm/q5-task-1.png)<!-- -->
+
+``` r
+  facet_grid(
+    ~Age)
+```
+
+    ## <ggproto object: Class FacetGrid, Facet, gg>
+    ##     attach_axes: function
+    ##     attach_strips: function
+    ##     compute_layout: function
+    ##     draw_back: function
+    ##     draw_front: function
+    ##     draw_labels: function
+    ##     draw_panel_content: function
+    ##     draw_panels: function
+    ##     finish_data: function
+    ##     format_strip_labels: function
+    ##     init_gtable: function
+    ##     init_scales: function
+    ##     map_data: function
+    ##     params: list
+    ##     set_panel_size: function
+    ##     setup_data: function
+    ##     setup_panel_params: function
+    ##     setup_params: function
+    ##     shrink: TRUE
+    ##     train_scales: function
+    ##     vars: function
+    ##     super:  <ggproto object: Class FacetGrid, Facet, gg>
 
 **Observations**:
 
