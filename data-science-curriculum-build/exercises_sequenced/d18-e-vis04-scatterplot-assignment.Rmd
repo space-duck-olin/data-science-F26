@@ -20,6 +20,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r library}
 library(tidyverse)
+library(ggrepel)
 ```
 
 ## Scatterplots
@@ -30,7 +31,7 @@ A scatterplot is simply a graph of two variables (`x` and `y`) where every data 
 ## NOTE: No need to modify! Just example code
 mpg %>% 
   ggplot(mapping = aes(x = displ, y = hwy)) +
-  geom_point()
+  geom_count()
 ```
 
 Part of the *power* of the scatterplot is that it's a flexible way to *show all the data*. Unlike bar charts (where our data needs to be 1:1), a scatterplot easily deals with multiple `y` values for the same `x` simply by plotting multiple points.
@@ -67,8 +68,8 @@ Modify the code below to adjust the jittering to be 0 in the horizontal directio
 mpg %>% 
   ggplot(mapping = aes(x = displ, y = hwy)) +
   geom_jitter(
-    # width = 0.2,
-    # height = 0.2,
+    width = 0,
+    height = 0.2,
   )
 ```
 
@@ -118,6 +119,7 @@ mpg %>%
   ggplot(mapping = aes(
     x = displ,
     y = hwy,
+    color = class
   )) +
   geom_jitter(width = 0.1, height = 0.5)
 ```
@@ -187,7 +189,8 @@ df_annotate <-
 
 mpg %>%
   ggplot(aes(displ, hwy)) +
-  geom_point(aes(color = class))
+  geom_point(aes(color = class)) +
+  geom_label_repel(data = df_annotate,aes(label = class))
 ```
 
 ### __q4__ Interpret a scatterplot
@@ -209,7 +212,9 @@ mpg %>%
 
 **Observations**:
 - Which tends to be larger? `cty` or `hwy` mileage?
+hwy mileage tends to be larger 
 - What is the trend of mileage with `displ`?
+as displacement increases fuel mpg decreases 
 
 ## Aside: Scatterplot vs bar chart
 <!-- -------------------------------------------------- -->
