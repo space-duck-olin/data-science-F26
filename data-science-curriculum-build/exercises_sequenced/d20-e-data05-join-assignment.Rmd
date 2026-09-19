@@ -64,7 +64,7 @@ Describe what is wrong with the result of `bind_cols` above and how it happened.
 
 *Hint*: John Lennon played guitar in The Beatles. John McCartney is not a real person... (as far as I know).
 
-- Write your answer here
+- the arists were not in the same order for the Beatles1 and Beatles2
 
 ## Joining data
 
@@ -112,7 +112,8 @@ beatles3 <-
 *Hint*: You will need to use two join functions to complete this task.
 
 ```{r q2-task}
-df_q2 <-
+df_q2 <- inner_join(beatles1, beatles3, by = 'name') %>%
+  inner_join(beatles2,by='surname')
 ## TODO: Join beatles1 and beatles2 using beatles3 to match rows
 
 df_q2
@@ -202,7 +203,7 @@ Complete the code below by using an appropriate join to add the airport name to 
 flights %>% 
   left_join(
     airports %>% select(faa, name),
-    ## TODO: Select the correct join keys
+    by = c( "dest"          = "faa"              )
   ) %>% 
   select(flight, dest, name, everything())
 ```
@@ -226,7 +227,7 @@ Use `expand_grid` to create a `criteria` dataframe with the `month` equal to `8,
 *Hint 2*: Remember to look up the documentation for a function you don't yet know!
 
 ```{r q4-task}
-criteria <-
+criteria <- expand_grid(month= 8:9,dest = c('SFO', 'SJC','OAK'))
 ## TODO: Use expand_grid to create a criteria dataframe
 
 criteria
@@ -271,6 +272,7 @@ Use the `criteria` dataframe you produced above to filter `flights` on `dest` an
 ```{r q5-task}
 df_q5 <-
   flights %>%
+  semi_join(criteria)
 ## TODO: Use expand_grid to create a criteria dataframe
 
 df_q5

@@ -79,6 +79,8 @@ The following graph doesn't work as its author intended. Based on what we learne
 ```{r q1-task}
 ## TODO: Fix the following code
 gapminder %>%
+  group_by(continent, year) %>%
+  summarize(lifeExp = mean(lifeExp)) %>% 
   filter(continent == "Asia") %>%
   ggplot(aes(year, lifeExp)) +
   geom_line()
@@ -97,7 +99,9 @@ mpg %>%
 
 **Observations**:
 - What does a line plot assume about the data?
+the data is one to one
 - How does the `mpg` dataset violate this assumption?
+engines with the same displacment can have different highway mpg. 
 
 ## Smoothing data
 
@@ -153,7 +157,9 @@ economics %>%
 
 **Observations**:
 - What can you tell based on the `Raw` data?
+unempolyment goes up and down over time . 
 - What can you tell based on the `Smoothed` data?
+unempolyment is increasing over time
 
 <!-- include-exit-ticket -->
 # Exit Ticket
