@@ -148,7 +148,7 @@ diamonds %>%
 AAA, ABT, or DHY?
 
 **Justify**
-Write your justification here!
+Write your justification here! ABT
 
 ### __q2__ Identify the point on the narrative spectrum, and justify your answer.
 
@@ -173,7 +173,7 @@ diamonds %>%
 AAA, ABT, or DHY?
 
 **Justify**
-Write your justification here!
+Write your justification here! DHY
 
 ### __q3__ Identify the point on the narrative spectrum, and justify your answer.
 
@@ -197,7 +197,7 @@ AAA, ABT, or DHY?
 
 **Justify**
 Write your justification here!
-
+AAA
 ### __q4__ Turn in all your answers via google forms. [Link](https://forms.gle/kHuT5oufUQA7jRWG8)
 
 <!-- include-exit-ticket -->
