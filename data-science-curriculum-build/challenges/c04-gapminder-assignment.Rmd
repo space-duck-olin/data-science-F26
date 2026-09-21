@@ -1,6 +1,6 @@
 ---
 title: "Gapminder"
-author: "(Your name here)"
+author: "Emily Boyd"
 date: 2020-
 output:
   github_document:
@@ -57,11 +57,15 @@ dataset?
 
 ```{r q0-task}
 ## TASK: Do your "first checks" here!
+gapminder %>% 
+  glimpse()
+gapminder %>%
+  summary()
 ```
 
 **Observations**:
 
-- Write all variable names here
+- country, continent, year, lifeExp, pop, gdpPercap
 
 ### __q1__ Determine the most and least recent years in the `gapminder` dataset.
 
@@ -69,8 +73,8 @@ dataset?
 
 ```{r q1-task}
 ## TASK: Find the largest and smallest values of `year` in `gapminder`
-year_max <- NA_real_
-year_min <- NA_real_
+year_max <- gapminder %>% pull(year) %>% max()
+year_min <- gapminder %>% pull(year) %>% min()
 ```
 
 Use the following test to check your work.
@@ -96,6 +100,12 @@ You may encounter difficulties in visualizing these data; if so document your ch
 
 ```{r q2-task}
 ## TASK: Create a visual of gdpPercap vs continent
+gapminder %>%
+  filter(year == year_min) %>% 
+  ggplot(aes(country,gdpPercap))+
+  geom_col() +
+  facet_grid(vars(continent))
+
 ```
 
 **Observations**:
@@ -139,6 +149,7 @@ gapminder %>%
 
 ```{r q4-task}
 ## TASK: Create a visual of gdpPercap vs continent
+
 ```
 
 **Observations**:
