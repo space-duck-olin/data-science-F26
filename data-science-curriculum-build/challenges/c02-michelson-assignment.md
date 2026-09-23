@@ -157,12 +157,19 @@ df_q1 %>%
     ## 2 2               39      299858.
     ## 3 1               15      299808
 
-**Observations**: - Write your observations here! - -There is the
-largest number of photo with a good distinctness. The difference in the
-mean velocity between the good and fair distinctiveness is only 3.2
-km/s. - Why might your table differ from Michelson’s? - - My table might
-differ between Michelson because I did not round my velocity. It appears
-that Michelson rounded his mean velocities to the tens place.
+**Observations**: -
+
+-There is the largest number of photos with a good distinctness with a
+count of 46 photos.
+
+\- The difference in the mean velocity between the good, distinctness 3,
+and poor, distinctness 1, is 53.7 km/s.
+
+\- Why might your table differ from Michelson’s? -
+
+\- My table might differ between Michelson because I did not round my
+velocity. It appears that Michelson rounded his mean velocities to the
+tens place.
 
 The `Velocity` values in the dataset are the speed of light *in air*;
 Michelson introduced a couple of adjustments to estimate the speed of
@@ -178,7 +185,7 @@ in the dataset.
 ## TODO: Adjust the data, assign to df_q2
 df_q2 <- 
   df_michelson %>%
-  mutate(`VelocityVacuum` = Velocity +92)
+  mutate(`VelocityVacuum` = Velocity + 92)
 df_q2
 ```
 
@@ -226,7 +233,7 @@ than the true error?
 ``` r
 ## TODO: Compare Michelson's estimate and error against the true value
 True_error <- LIGHTSPEED_VACUUM - LIGHTSPEED_MICHELSON
-Michealson_error <- LIGHTSPEED_PM
+Michealson_error <- -LIGHTSPEED_PM
 True_error
 ```
 
@@ -236,7 +243,14 @@ True_error
 Michealson_error
 ```
 
-    ## [1] 51
+    ## [1] -51
+
+``` r
+compairison <- True_error/Michealson_error
+compairison
+```
+
+    ## [1] 2.971412
 
 **Observations**:
 
@@ -245,7 +259,7 @@ Michealson_error
   - Michelson estimate of the error is less than true error.
 - Make a quantitative comparison between Michelson’s uncertainty and his
   error.
-  - The true error is 2.98 times Michelson’s uncertainty.
+  - Michelson’s uncertainty is 2.97 times smaller than his error.
 
 The following plot shows all of Michelson’s data as a [control
 chart](https://en.wikipedia.org/wiki/Control_chart); this sort of plot
@@ -326,33 +340,48 @@ df_q2 %>%
 
 ![](c02-michelson-assignment_files/figure-gfm/q4-cf-real-simulated-1.png)<!-- -->
 
-**Observations**: Similarities - Both the real and simulated charts have
-the same upper and lower control lines - Both the real and simulated
-lines of dots for each day. Differences - The mean of each day crosses
-the control lines more on the real data. - Real data has more outliers
-that are further away from the control lines.
+**Observations**: Similarities
+
+- Both the real and simulated charts have the same upper and lower
+  control limits.
+
+\- Both the real and simulated data have multiple measurement for each
+day that the experiment was ran.
+
+Differences -
+
+\- The mean of each day crosses the control lines more on the real data.
+
+- Real data has more outliers that are further away from the control
+  lines.
 
 ### **q5** You have access to a few other variables. Construct a **at least three** visualizations of `VelocityVacuum` against these other factors. Are there other patterns in the data that might help explain the difference between Michelson’s estimate and `LIGHTSPEED_VACUUM`?
 
 ``` r
 df_q2 %>%
   ggplot(aes(Distinctness,VelocityVacuum)) +
-  geom_boxplot()
+  geom_boxplot() +
+  geom_hline(yintercept = LIGHTSPEED_VACUUM, linetype = "dashed")
 ```
 
 ![](c02-michelson-assignment_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+
 **Observations**:
 
 - Only values with distinctness 1,2 have outliers outside of the box and
   whisker plot. - Values with a distinctness 3 has the largest IQR
   range.
-- The mean of the velocityvaccum increases as the distincness increases
+- The mean of the velocityvaccum increases as the distinctiveness
+  increases.
+- It is unlikely that the distinctiveness led to the difference between
+  Michealson’s estimate and the true value.
 
 ``` r
 df_q2 %>%
   ggplot(aes(Temp,VelocityVacuum)) +
   geom_point()+
-  geom_smooth(method=lm)
+  geom_smooth(method=lm) +
+  geom_hline(yintercept = LIGHTSPEED_VACUUM, linetype = "dashed")
 ```
 
     ## `geom_smooth()` using formula = 'y ~ x'
@@ -363,18 +392,25 @@ df_q2 %>%
 
 - As the tempurature increases, the trend line for velocityvacuum also
   increases.
+- It is possible that the increase in ambient tempurature could explain
+  some of the differences in Michealson’s estimate and the true value
+  since the density of air changes with temperature.
 
 ``` r
 df_q2 %>%
-  ggplot(aes(VelocityVacuum,Velocity)) +
-  geom_point()
+  ggplot() +
+  geom_point(aes(x = Date, y = Velocity)) +
+  geom_hline(yintercept = LIGHTSPEED_VACUUM, linetype = "dashed")
 ```
 
 ![](c02-michelson-assignment_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+
 **Observations**:
 
-- The difference between VelocityVaccum and Velocity is a constant of 92
-  km/s.
+- The date when the measurement took place does not seem to explain the
+  difference between Michealson’s estimate and the true value.
+- For data points collected on the same date, there is still a large
+  between the data points.
 
 ## Bibliography
 
