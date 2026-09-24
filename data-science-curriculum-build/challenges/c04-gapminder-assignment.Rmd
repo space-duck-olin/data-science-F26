@@ -102,30 +102,47 @@ You may encounter difficulties in visualizing these data; if so document your ch
 ## TASK: Create a visual of gdpPercap vs continent
 gapminder %>%
   filter(year == year_min) %>% 
-  ggplot(aes(country,gdpPercap))+
-  geom_col() +
-  facet_grid(vars(continent))
+  ggplot(aes(continent,gdpPercap))+
+  geom_boxplot() +
+  scale_y_log10()
 
 ```
 
 **Observations**:
 
-- Write your observations here
+- Oceania has the highest median GDP per capia
+- Asia and America have outliers that are outside the whiskers of the box plots.
+
 
 **Difficulties & Approaches**:
 
-- Write your challenges and your approach to solving them
+- I tried graphing by country as first which made the graph unreadable. 
+- I tried graphing with out log scale and found that the differences were not possibel to figure out. 
 
 ### __q3__ You should have found *at least* three outliers in q2 (but possibly many more!). Identify those outliers (figure out which countries they are).
 
 ```{r q3-task}
 ## TASK: Identify the outliers from q2
+outlier_Asia <- gapminder %>% 
+  filter(year == year_min) %>% 
+  filter(continent == 'Asia') %>% 
+  arrange(desc(gdpPercap)) %>%
+  first()
+outlier_America <- gapminder %>% 
+  filter(year == year_min) %>% 
+  filter(continent == 'Americas') %>% 
+  arrange(desc(gdpPercap)) %>%
+  top_n(2)
+
+outlier_Asia
+outlier_America
+
 ```
 
 **Observations**:
 
 - Identify the outlier countries from q2
-  - (Your response here)
+  - Kuwait, United States, Canada
 
 *Hint*: For the next task, it's helpful to know a ggplot trick we'll learn in an upcoming exercise: You can use the `data` argument inside any `geom_*` to modify the data that will be plotted *by that geom only*. For instance, you can use this trick to filter a set of points to label:
 
@@ -149,6 +166,7 @@ gapminder %>%
 
 ```{r q4-task}
 ## TASK: Create a visual of gdpPercap vs continent
+
 
 ```
 

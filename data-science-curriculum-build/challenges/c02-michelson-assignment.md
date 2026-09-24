@@ -72,6 +72,7 @@ all files uploaded to GitHub.**
 library(tidyverse)
 library(googlesheets4)
 
+
 url <- "https://docs.google.com/spreadsheets/d/1av_SXn4j0-4Rk0mQFik3LLr-uf0YdA06i3ugE6n-Zdo/edit?usp=sharing"
 
 # Parameters
@@ -106,9 +107,19 @@ df_michelson <-
   mutate(Distinctness = as_factor(Distinctness))
 ```
 
-    ## ✔ Reading from "michelson1879".
+    ## ✖ Request 1 failed [429: RESOURCE_EXHAUSTED].
 
+    ## ℹ Will retry in 4s.
+
+    ## ⠙ Retry happens in  4s⠹ Retry happens in  4s⠸ Retry happens in  4s⠼ Retry happens in  4s⠴ Retry happens in  4s⠦ Retry happens in  4s⠧ Retry happens in  4s⠇ Retry happens in  4s⠏ Retry happens in  4s⠋ Retry happens in  4s⠙ Retry happens in  4s⠹ Retry happens in  4s⠸ Retry happens in  4s⠼ Retry happens in  4s⠴ Retry happens in  4s⠦ Retry happens in  4s⠧ Retry happens in  3s⠇ Retry happens in  3s⠏ Retry happens in  3s⠋ Retry happens in  3s⠙ Retry happens in  3s⠹ Retry happens in  3s⠸ Retry happens in  3s⠼ Retry happens in  2s⠴ Retry happens in  2s⠦ Retry happens in  2s⠧ Retry happens in  2s⠇ Retry happens in  2s⠏ Retry happens in  2s⠋ Retry happens in  2s⠙ Retry happens in  1s⠹ Retry happens in  1s⠸ Retry happens in  1s⠼ Retry happens in  1s⠴ Retry happens in  1s⠦ Retry happens in  1s⠧ Retry happens in  0s⠇ Retry happens in  0s⠏ Retry happens in  0s                       ✔ Request 2 successful!
+    ## ⠏ Retry happens in  0s                       ✔ Reading from "michelson1879".
     ## ✔ Range 'Sheet1'.
+    ## ✖ Request 1 failed [429: RESOURCE_EXHAUSTED].
+    ## ℹ Will retry in 4.6s.
+    ## ⠙ Retry happens in  4s⠹ Retry happens in  5s⠸ Retry happens in  5s⠼ Retry happens in  5s⠴ Retry happens in  5s⠦ Retry happens in  5s⠧ Retry happens in  6s⠇ Retry happens in  6s⠏ Retry happens in  6s⠋ Retry happens in  6s⠙ Retry happens in  6s⠹ Retry happens in  6s⠸ Retry happens in  6s⠼ Retry happens in  6s⠴ Retry happens in  6s⠦ Retry happens in  6s⠧ Retry happens in  6s⠇ Retry happens in  6s⠏ Retry happens in  6s⠋ Retry happens in  6s⠙ Retry happens in  6s⠹ Retry happens in  6s⠸ Retry happens in  5s⠼ Retry happens in  5s⠴ Retry happens in  5s⠦ Retry happens in  5s⠧ Retry happens in  5s⠇ Retry happens in  5s⠏ Retry happens in  5s⠋ Retry happens in  5s⠙ Retry happens in  4s⠹ Retry happens in  4s⠸ Retry happens in  4s⠼ Retry happens in  4s⠴ Retry happens in  4s⠦ Retry happens in  4s⠧ Retry happens in  3s⠇ Retry happens in  3s⠏ Retry happens in  3s⠋ Retry happens in  3s⠙ Retry happens in  3s⠹ Retry happens in  3s⠸ Retry happens in  2s⠼ Retry happens in  2s⠴ Retry happens in  2s⠦ Retry happens in  2s⠧ Retry happens in  1s⠇ Retry happens in  1s⠏ Retry happens in  1s⠋ Retry happens in  1s⠙ Retry happens in  0s⠹ Retry happens in  0s                       ✖ Request 2 failed [429: RESOURCE_EXHAUSTED].
+    ## ⠹ Retry happens in  0s                       ℹ Will retry in 8.1s.
+    ## ⠹ Retry happens in  0s                       ⠙ Retry happens in  9s⠹ Retry happens in 10s⠸ Retry happens in 10s⠼ Retry happens in 11s⠴ Retry happens in 11s⠦ Retry happens in 12s⠧ Retry happens in 12s⠇ Retry happens in 12s⠏ Retry happens in 12s⠋ Retry happens in 13s⠙ Retry happens in 13s⠹ Retry happens in 13s⠸ Retry happens in 12s⠼ Retry happens in 13s⠴ Retry happens in 13s⠦ Retry happens in 13s⠧ Retry happens in 13s⠇ Retry happens in 13s⠏ Retry happens in 13s⠋ Retry happens in 13s⠙ Retry happens in 12s⠹ Retry happens in 12s⠸ Retry happens in 12s⠼ Retry happens in 12s⠴ Retry happens in 12s⠦ Retry happens in 12s⠧ Retry happens in 12s⠇ Retry happens in 12s⠏ Retry happens in 12s⠋ Retry happens in 11s⠙ Retry happens in 11s⠹ Retry happens in 11s⠸ Retry happens in 11s⠼ Retry happens in 11s⠴ Retry happens in 11s⠦ Retry happens in 10s⠧ Retry happens in 10s⠇ Retry happens in 10s⠏ Retry happens in 10s⠋ Retry happens in 10s⠙ Retry happens in 10s⠹ Retry happens in  9s⠸ Retry happens in  9s⠼ Retry happens in  9s⠴ Retry happens in  9s⠦ Retry happens in  9s⠧ Retry happens in  9s⠇ Retry happens in  8s⠏ Retry happens in  8s⠋ Retry happens in  8s⠙ Retry happens in  8s⠹ Retry happens in  8s⠸ Retry happens in  8s⠼ Retry happens in  7s⠴ Retry happens in  7s⠦ Retry happens in  7s⠧ Retry happens in  7s⠇ Retry happens in  7s⠏ Retry happens in  6s⠋ Retry happens in  6s⠙ Retry happens in  6s⠹ Retry happens in  6s⠸ Retry happens in  6s⠼ Retry happens in  5s⠴ Retry happens in  5s⠦ Retry happens in  5s⠧ Retry happens in  5s⠇ Retry happens in  5s⠏ Retry happens in  5s⠋ Retry happens in  4s⠙ Retry happens in  4s⠹ Retry happens in  4s⠸ Retry happens in  4s⠼ Retry happens in  4s⠴ Retry happens in  3s⠦ Retry happens in  3s⠧ Retry happens in  3s⠇ Retry happens in  3s⠏ Retry happens in  3s⠋ Retry happens in  3s⠙ Retry happens in  2s⠹ Retry happens in  2s⠸ Retry happens in  2s⠼ Retry happens in  2s⠴ Retry happens in  2s⠦ Retry happens in  1s⠧ Retry happens in  1s⠇ Retry happens in  1s⠏ Retry happens in  1s⠋ Retry happens in  1s⠙ Retry happens in  0s⠹ Retry happens in  0s⠸ Retry happens in  0s                       ✔ Request 3 successful!
+    ## ⠸ Retry happens in  0s                       
 
 ``` r
 df_michelson %>% glimpse()
@@ -147,15 +158,15 @@ df_q1 <-
     MeanVelocity = mean(Velocity)
   )
 df_q1 %>%
-  arrange(desc(Distinctness))
+  arrange(desc(Distinctness)) %>%
+  knitr::kable()
 ```
 
-    ## # A tibble: 3 × 3
-    ##   Distinctness     n MeanVelocity
-    ##   <fct>        <int>        <dbl>
-    ## 1 3               46      299862.
-    ## 2 2               39      299858.
-    ## 3 1               15      299808
+| Distinctness |   n | MeanVelocity |
+|:-------------|----:|-------------:|
+| 3            |  46 |     299861.7 |
+| 2            |  39 |     299858.5 |
+| 1            |  15 |     299808.0 |
 
 **Observations**: -
 

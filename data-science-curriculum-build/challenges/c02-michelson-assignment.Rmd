@@ -35,7 +35,7 @@ define how you will be graded, both on an individual and team basis.
 <!-- ------------------------- -->
 
 | Category | Needs Improvement | Satisfactory |
-|------------------|-----------------------------|-------------------------|
+|----|----|----|
 | Effort | Some task **q**'s left unattempted | All task **q**'s attempted |
 | Observed | Did not document observations, or observations incorrect | Documented correct observations based on analysis |
 | Supported | Some observations not clearly supported by analysis | All observations clearly supported by analysis (table, graph, etc.) |
@@ -56,6 +56,7 @@ all files uploaded to GitHub.**
 # Libraries
 library(tidyverse)
 library(googlesheets4)
+
 
 url <- "https://docs.google.com/spreadsheets/d/1av_SXn4j0-4Rk0mQFik3LLr-uf0YdA06i3ugE6n-Zdo/edit?usp=sharing"
 
@@ -119,7 +120,8 @@ df_q1 <-
     MeanVelocity = mean(Velocity)
   )
 df_q1 %>%
-  arrange(desc(Distinctness))
+  arrange(desc(Distinctness)) %>%
+  knitr::kable()
 ```
 
 **Observations**: -
@@ -271,8 +273,8 @@ df_q2 %>%
 
 **Observations**: Similarities
 
- - Both the real and simulated charts have the same upper and lower
-control limits.
+- Both the real and simulated charts have the same upper and lower
+  control limits.
 
 \- Both the real and simulated data have multiple measurement for each
 day that the experiment was ran.
@@ -281,8 +283,8 @@ Differences -
 
 \- The mean of each day crosses the control lines more on the real data.
 
- - Real data has more outliers that are further away from the control
-lines.
+- Real data has more outliers that are further away from the control
+  lines.
 
 ### **q5** You have access to a few other variables. Construct a **at least three** visualizations of `VelocityVacuum` against these other factors. Are there other patterns in the data that might help explain the difference between Michelson's estimate and `LIGHTSPEED_VACUUM`?
 
