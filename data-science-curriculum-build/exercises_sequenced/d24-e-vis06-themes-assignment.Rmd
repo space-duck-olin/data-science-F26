@@ -25,7 +25,9 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r q1-task}
 mpg %>%
   ggplot(aes(displ, hwy, color = class)) +
-  geom_point()
+  geom_point()+
+  theme_void()+
+  guides(size="none",colour = "none")
 ```
 
 
@@ -73,12 +75,13 @@ mpg %>%
     x = "Engine Displacement (L)",
     y = "Highway Fuel Economy (mpg)"
   )
+  #+theme_common()
 ```
 
 **Observations**:
 
 - What changed about the graph when you added `theme_common()`?
-
+size of the captions, graph location in the grid
 Calling `theme_common()`, along with settings `labs()` and making some smart choices about geoms and annotations is often all you need to make a *really high-quality graph*.
 
 ### __q3__ Make the following plot as *ugly as possible*; the more `theme()` arguments you use, the better!
@@ -90,7 +93,16 @@ mpg %>%
   ggplot(aes(displ, hwy, color = class)) +
   geom_point() +
   theme(
-    axis.text.x = element_text(size = 32)
+    axis.text.x = element_text(size = 32) ,
+    panel.grid.major = element_line(color = "yellow"),
+    panel.grid.minor = element_line(color = "yellow"),
+
+    aspect.ratio = 16 / 2,
+    plot.subtitle = element_text(size = 40),
+    plot.caption = element_text(size = 1),
+    legend.title = element_text(size = 22),
+    legend.text = element_text(size = 1),
+    legend.key = element_rect(fill = "blue")
   )
 ```
 
