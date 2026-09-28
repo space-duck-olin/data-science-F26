@@ -166,13 +166,25 @@ gapminder %>%
 
 ```{r q4-task}
 ## TASK: Create a visual of gdpPercap vs continent
+gapminder %>%
+  filter(year == min(year)|year == max(year)) %>%
 
+  ggplot(aes(continent, gdpPercap)) +
+  geom_boxplot() +
+  scale_y_log10() +
+  facet_grid(vars(year))+
+  geom_point(
+    data = . %>% filter(country %in% c("United States", "Canada", "Kuwait")),
+    mapping = aes(color = country),
+    size = 2
+  )
 
 ```
 
 **Observations**:
 
-- Write your observations here
+- Kuwait is no longer an outlier in 2007 waver having been an outlier in 1952.
+- The United States and Canada are still outliers in both 1952 and 2007. 
 
 # Your Own EDA
 <!-- -------------------------------------------------- -->
@@ -183,20 +195,46 @@ Now it's your turn! We just went through guided EDA considering the GDP per capi
 
 ```{r q5-task1}
 ## TASK: Your first graph
+gapminder %>%
+  filter(year == '1952'|year == '1977') %>%
+
+  ggplot(aes(continent, lifeExp)) +
+  geom_boxplot() +
+  facet_wrap(vars(year))+
+  geom_point(
+    data = . %>% filter(country %in% c("United States", "Soviet Union", "Vietnam")),
+    mapping = aes(color = country),
+    size = 2
+  )
 ```
 
-- (Your notes and observations here)
+- Question: What happens to lifespan before and after the Vietnam War in countries that participated? 
+- From before the Vietnam war to after the Vietnam war the life expectancy in Vietnam increased while staying in the 1nd quartile.
+- In 1952, the United States was the maximum life expectancy in the Americas while after the Vietnam War, they were no longer the maximum.
 
 ```{r q5-task2}
 ## TASK: Your second graph
+gapminder %>%
+  filter(country == 'Kuwait') %>%
+  ggplot(aes(year, gdpPercap)) +
+  geom_line() 
 ```
 
-- (Your notes and observations here)
+- Question: What happened to the Kuwait GDP between 1952 and 2007?
+-The Kuwait GDP per capita decreased sharply in the year 1977. 
+- The increase in 1972 and then sharp fall in 1977 is assicoated with the rise and fall of the nationalized oil company. 
 
 ```{r q5-task3}
 ## TASK: Your third graph
+gapminder %>% 
+  group_by(year,continent) %>%
+  summarize(pop=sum(pop)) %>%
+  ggplot(aes(year,pop,fill = continent))+
+  geom_area()
 ```
 
-- (Your notes and observations here)
+- What happens to the world population over time?
+- The population increased over time.
+- The amount of the world population in Asia increased over time. 
 
 
