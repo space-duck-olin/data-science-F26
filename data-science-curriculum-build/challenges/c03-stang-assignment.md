@@ -252,6 +252,22 @@ df_stang_long %>%
     ##  Max.   :0.08100                  Max.   :90   Max.   :10700   Max.   :0.3310
 
 ``` r
+df_stang_long %>%
+  pull(var = 1, name = thick) %>%
+  unique
+```
+
+    ## [1] 0.022 0.032 0.064 0.081
+
+``` r
+df_stang_long %>%
+  pull(var = 3, name = angle) %>%
+  unique
+```
+
+    ## [1]  0 45 90
+
+``` r
 ##
 ```
 
@@ -289,7 +305,10 @@ df_stang_long %>%
 **Observations**:
 
 - Yes nu does increase with increases in E as demonstrated by the
-  postive slope in the trend line.
+  positive slope in the trend line.
+- The limit of this observation is that it does not account for the
+  differences in plate thickness between the measurements nor does it
+  show the potential impact of the angle differences.
 
 ### **q4** Consider the following statement:
 
