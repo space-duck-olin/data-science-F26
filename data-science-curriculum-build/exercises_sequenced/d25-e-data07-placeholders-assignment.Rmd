@@ -29,7 +29,7 @@ library(tidyverse)
 
 ```{r q1-task}
 ## NOTE: Re-write this code to use the placeholder
-diamonds %>% glimpse()
+diamonds %>% glimpse(.)
 ```
 
 ### __q2__ Fix the lambda expression
