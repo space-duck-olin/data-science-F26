@@ -1,9 +1,9 @@
 ---
 title: "Antibiotics"
-author: "(Your name here)"
+author: "Emily Boyd"
 date: 2020-
 output:
-  github_document
+  github_document 
 ---
 
 *Purpose*: Creating effective data visualizations is an *iterative* process; very rarely will the first graph you make be the most effective. The most effective thing you can do to be successful in this iterative process is to *try multiple graphs* of the same data.
@@ -76,6 +76,21 @@ In this visual you must show *all three* effectiveness values for *all 16 bacter
 
 ```{r q1.1}
 # WRITE YOUR CODE HERE
+set.seed(101)
+df_antibiotics_long <- df_antibiotics %>%
+  pivot_longer(
+    names_to = "antibiotic",
+    values_to = "value",
+    cols = c("penicillin","streptomycin","neomycin")
+  )
+
+df_antibiotics_long %>%
+  ggplot(aes(bacteria,value, color = gram))+
+  geom_point()+
+  coord_flip()+
+  facet_wrap(vars(antibiotic))+
+  geom_hline(yintercept = 0.1)
+
 ```
 
 #### Visual 2 (All variables)
@@ -86,6 +101,13 @@ Note that your visual must be *qualitatively different* from *all* of your other
 
 ```{r q1.2}
 # WRITE YOUR CODE HERE
+df_antibiotics_long %>% 
+  ggplot(aes(bacteria,value, color = antibiotic))+
+  geom_jitter(height=0)+
+  coord_flip()+
+  scale_y_log10()+
+  geom_hline(yintercept = 0.1)+
+  facet_grid(vars(gram), scales = "free_y")
 ```
 
 #### Visual 3 (Some variables)
@@ -96,6 +118,12 @@ Note that your visual must be *qualitatively different* from *all* of your other
 
 ```{r q1.3}
 # WRITE YOUR CODE HERE
+df_antibiotics %>%
+  ggplot(aes(neomycin,streptomycin, color = bacteria))+
+  geom_point(size = 4)+
+  scale_y_log10()+
+  scale_x_log10()+
+  coord_flip()
 ```
 
 #### Visual 4 (Some variables)
@@ -106,6 +134,10 @@ Note that your visual must be *qualitatively different* from *all* of your other
 
 ```{r q1.4}
 # WRITE YOUR CODE HERE
+df_antibiotics_long %>%
+  ggplot(aes(bacteria,value, color = gram))+
+  geom_boxplot() +
+  coord_flip()
 ```
 
 #### Visual 5 (Some variables)
@@ -116,6 +148,11 @@ Note that your visual must be *qualitatively different* from *all* of your other
 
 ```{r q1.5}
 # WRITE YOUR CODE HERE
+df_antibiotics %>%
+  ggplot(aes(bacteria,neomycin))+
+  geom_col(aes(fill = streptomycin)) +
+  scale_y_log10()+
+  coord_flip()
 ```
 
 ### __q2__ Assess your visuals
@@ -132,11 +169,11 @@ There are **two questions** below; use your five visuals to help answer both Gui
 
 *Observations*
 - What is your response to the question above?
-  - (Write your response here)
+  - Gram positive bacteria respond poorly to penicillin while gram negative bacteria tend to respond better to penicillin.
 - Which of your visuals above (1 through 5) is **most effective** at helping to answer this question?
-  - (Write your response here)
+  - Visual two
 - Why?
-  - (Write your response here)
+  - the log scale and minimum line helped tell the difference between difference genera and gram stain.
 
 #### Guiding Question 2
 
@@ -146,11 +183,12 @@ In 1974 *Diplococcus pneumoniae* was renamed *Streptococcus pneumoniae*, and in 
 
 *Observations*
 - What is your response to the question above?
-  - (Write your response here)
+  - Diplococcus pneumoniae was renamed to streptococcus pneumoniae as it better follows the behavior of other streptococcus bacteria. While streptococcus fecalis does not follow the same behavior of the other streptococcus bacteria. 
 - Which of your visuals above (1 through 5) is **most effective** at helping to answer this question?
-  - (Write your response here)
+  - 5
 - Why?
-  - (Write your response here)
+  - It provides a direct comparison that shows the difference in response of streptococcus classes of bacteria.  
+  
 
 
 # References
