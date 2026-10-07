@@ -43,6 +43,7 @@ mpg %>%
 **Observations**:
 
 - What are some issues with this graph?
+alphabetical ordering is not helpful
 
 ### __q2__ What are some issues with the following graph? *Don't just say* "it's bad"---use concepts from the required reading.
 
@@ -55,7 +56,7 @@ as_tibble(mtcars) %>%
   geom_point() +
   facet_wrap(~model)
 ```
-
+organization is not helpful,area is low on the list
 - What are some issues with this graph?
 
 ### __q3__ What are some issues with the following graph? *Don't just say* "it's bad"---use concepts from the required reading.
@@ -66,7 +67,7 @@ diamonds %>%
   ggplot(aes(clarity, fill = cut)) +
   geom_bar()
 ```
-
+stacked bar charts are almost never it, color is a low on the list, no common axis
 - What are some issues with this graph?
 
 ### __q4__ What are some issues with the following graph? *Don't just say* "it's bad"---use concepts from the required reading.
@@ -81,6 +82,7 @@ diamonds %>%
 ```
 
 - What are some issues with this graph?
+pie charts are bad, using angle as differenatior 
 
 <!-- include-exit-ticket -->
 # Exit Ticket
