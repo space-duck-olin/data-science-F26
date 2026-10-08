@@ -39,8 +39,8 @@ The reading discussed *Using lambda expressions with `%>%`*; use this part of th
 ```{r q2-task}
 ## TASK: Uncomment and run this code; explain
 ##       why it fails and fix it.
-# 2 %>%
-#   . * .
+ 2 %>%
+   {. * .}
 
 ```
 
@@ -57,9 +57,8 @@ diamonds %>%
   geom_point() +
   geom_point(
     ## TODO: Re-write this section
-    data = diamonds %>%
+    data = . %>%
       filter(
-        carat <= 0.3,
         cut == "Fair"
       ),
     color = "red"

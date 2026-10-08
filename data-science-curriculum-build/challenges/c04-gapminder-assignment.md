@@ -313,8 +313,8 @@ gapminder %>%
 
 **Observations**:
 
-- Kuwait is no longer an outlier in 2007 waver having been an outlier in
-  1952.
+- Kuwait is no longer an outlier in 2007 despite having been an outlier
+  in 1952.
 - The United States and Canada are still outliers in both 1952 and 2007.
 
 # Your Own EDA
@@ -337,7 +337,7 @@ gapminder %>%
   geom_boxplot() +
   facet_wrap(vars(year))+
   geom_point(
-    data = . %>% filter(country %in% c("United States", "Soviet Union", "Vietnam")),
+    data = . %>% filter(country %in% c("United States", "Vietnam")),
     mapping = aes(color = country),
     size = 2
   )
@@ -348,9 +348,10 @@ gapminder %>%
 - Question: What happens to lifespan before and after the Vietnam War in
   countries that participated?
 - From before the Vietnam war to after the Vietnam war the life
-  expectancy in Vietnam increased while staying in the 1nd quartile.
+  expectancy in Vietnam increased while staying around the 1st quartile.
 - In 1952, the United States was the maximum life expectancy in the
   Americas while after the Vietnam War, they were no longer the maximum.
+- Soviet Union was not included due to not being in the data set.
 
 ``` r
 ## TASK: Your second graph
@@ -365,15 +366,15 @@ gapminder %>%
 - Question: What happened to the Kuwait GDP between 1952 and 2007? -The
   Kuwait GDP per capita decreased sharply in the year 1977.
 - The increase in 1972 and then sharp fall in 1977 is assicoated with
-  the rise and fall of the nationalized oil company.
+  the stock market crash in Kuwait.
 
 ``` r
 ## TASK: Your third graph
 gapminder %>% 
   group_by(year,continent) %>%
   summarize(pop=sum(pop)) %>%
-  ggplot(aes(year,pop,fill = continent))+
-  geom_area()
+  ggplot(aes(year,pop,color = continent))+
+  geom_line()
 ```
 
     ## `summarise()` has regrouped the output.
