@@ -66,6 +66,9 @@ The tilde `~` operator signals to R that we're doing something special: defining
 ```{r def-fun}
 # NOTE: No need to change this example
 pow10 <- function(x) {10 ^ x}
+favorite_desserts <- list(Sophia = "banana bread", Eliott = "pancakes", Karina = "chocolate cake")
+favorite_desserts |> map_chr(\(food) paste(food, "rocks!"))
+
 ```
 
 And defining a more compact version with `~ 10 ^ x.`. We've actually already seen this formula notation when we use `facet_grid()` and `facet_wrap()`, though it's used in a very different way in that context.
@@ -79,7 +82,7 @@ Use `map_chr()` to prepend the string `"N: "` to the numbers in `v_nums`. Use fo
 ```{r q1-task}
 v_nums <- c(1, 2, 3)
 ## TASK: Prepend "N: " with a map to v_nums
-v_q1 <- NA_character_
+v_q1 <- map_chr(v_nums,~ str_c('N: ',.x))
 
 v_q1
 ```
@@ -100,7 +103,7 @@ Use `map_dbl()` to compute the `log` with `base = 2` of the numbers in `v_nums`.
 
 ```{r q2-task}
 ## TASK: Compute the log base = 2 with a map
-v_q2 <- NA_character_
+v_q2 <- map_dbl(v_nums,~ log(.x,2))
 
 v_q2
 ```

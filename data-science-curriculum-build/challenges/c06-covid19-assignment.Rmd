@@ -79,7 +79,7 @@ That's the high-level view; now let's dig into the details.
 
 ```{r q1-task}
 ## TASK: Load the census bureau data with the following tibble name.
-df_pop <- NA
+df_pop <- read.csv("C:/Users/boyde/data-science-F26/data-science-curriculum-build/challenges/data/ACSDT5Y2018.B01003-Data.csv",skip = 1)
 ```
 
 *Note*: You can find information on 1-year, 3-year, and 5-year estimates [here](https://www.census.gov/programs-surveys/acs/guidance/estimates.html). The punchline is that 5-year estimates are more reliable but less current.
@@ -95,7 +95,7 @@ The New York Times is publishing up-to-date data on COVID-19 on [GitHub](https:/
 
 ```{r q2-task}
 ## TASK: Find the URL for the NYT covid-19 county-level data
-url_counties <- NA_character_
+url_counties <- "https://raw.githubusercontent.com/nytimes/covid-19-data/refs/heads/master/us-counties.csv"
 ```
 
 Once you have the url, the following code will download a local copy of the data, then load the data into R.
@@ -136,7 +136,7 @@ To join these datasets, we'll need to use [FIPS county codes](https://en.wikiped
 
 ```{r q3-task}
 ## TASK: Create a `fips` column by extracting the county code
-df_q3 <- NA
+df_q3 <- df_pop %>% mutate(fips = str_sub(Geography,-5,-1))
 ```
 
 Use the following test to check your answer.
@@ -146,7 +146,7 @@ Use the following test to check your answer.
 ## Check known county
 assertthat::assert_that(
               (df_q3 %>%
-              filter(str_detect(`Geographic Area Name`, "Autauga County")) %>%
+              filter(str_detect(`Geographic.Area.Name`, "Autauga County")) %>%
               pull(fips)) == "01001"
             )
 print("Very good!")
@@ -156,7 +156,7 @@ print("Very good!")
 
 ```{r q4-task}
 ## TASK: Join df_covid and df_q3 by fips.
-df_q4 <- NA
+df_q4 <- left_join(df_covid,df_q3,join_by('fips'))
 ```
 
 Use the following test to check your answer.
@@ -203,7 +203,7 @@ df_data <-
     fips,
     cases,
     deaths,
-    population = `Estimate!!Total`
+    population = `Estimate..Total`
   )
 ```
 
@@ -220,7 +220,10 @@ Now that we've done the hard work of loading and wrangling the data, we can fina
 ```{r q5-task}
 ## TASK: Normalize cases and deaths
 df_normalized <-
-  df_data
+  df_data %>% mutate(
+    cases_per100k = (cases/population)*100000, 
+    deaths_per100k = (deaths/population)*100000
+    )
 ```
 
 You may use the following test to check your work.
@@ -289,12 +292,20 @@ Compute the mean and standard deviation for `cases_per100k` and `deaths_per100k`
 
 ```{r q6-task}
 ## TASK: Compute mean and sd for cases_per100k and deaths_per100k
+mean_casep100K <- df_normalized$cases_per100k %>% mean(na.rm = TRUE)
+mean_deathp100K <- df_normalized$deaths_per100k %>% mean(na.rm = TRUE)
+sd_casep100K <- df_normalized$cases_per100k %>% sd(na.rm = TRUE)
+sd_deathp100K <- df_normalized$deaths_per100k %>% sd(na.rm = TRUE)
+mean_casep100K
+mean_deathp100K
+sd_casep100K 
+sd_deathp100K 
 ```
 
 - Which rows did you pick?
-  - (Your response here)
+  - I picked the rows that have numbers in them.
 - Why?
-  - (Your response here)
+  - I picked these rows becuase R will not do the math with NA values
 
 ### __q7__ Find and compare the top 10
 
@@ -302,15 +313,24 @@ Find the top 10 counties in terms of `cases_per100k`, and the top 10 in terms of
 
 ```{r q7-task}
 ## TASK: Find the top 10 max cases_per100k counties; report populations as well
-
+top10cases_per100K <- df_normalized %>% 
+  arrange(desc(cases_per100k)) %>% 
+  select(population,county,date,cases_per100k) %>% 
+  top_n(10)
+top10cases_per100K
 ## TASK: Find the top 10 deaths_per100k counties; report populations as well
+top10deaths_per100K <- df_normalized %>% 
+  arrange(desc(deaths_per100k)) %>% 
+  select(population,county,date,deaths_per100k) %>% 
+  top_n(10)
+top10deaths_per100K
 ```
 
 **Observations**:
 
-- (Note your observations here!)
+- Loving county has small population which makes the cases per 100k much larger
 - When did these "largest values" occur?
-  - (Your response here)
+  - 2022 from february to may
 
 ## Self-directed EDA
 <!-- ------------------------- -->
@@ -346,7 +366,7 @@ df_normalized %>%
     aes(date, cases_per100k, color = fct_reorder2(county, date, cases_per100k))
   ) +
   geom_line() +
-  scale_y_log10(labels = scales::label_number_si()) +
+  scale_y_log10() +
   scale_color_discrete(name = "County") +
   theme_minimal() +
   labs(

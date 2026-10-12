@@ -65,7 +65,7 @@ Open the target Excel sheet (located at `./data/undoc.xlsx`) and find which line
 ## TODO:
 df_q2 <- read_excel(
   filename,
-  skip = 1
+  skip = 6
 )
 df_q2 %>% glimpse
 ```
@@ -127,7 +127,31 @@ col_names_undoc <-
 
 ## TASK: Use the arguments `skip`, `col_names`, and `col_types`
 df_q3 <-
-  read_excel(filename, sheet = 1)
+  read_excel(filename, 
+             sheet = 1, 
+             skip = 7, 
+             col_names = col_names_undoc, 
+             col_types = c(
+    "region"     = "text",
+    "sub_region" = "text",
+    "territory"  = "text",
+    "source"     = "text",
+    "org"        = "text",
+    "indicator"  = "text",
+    "2000" = "numeric",
+    "2001" = "numeric",
+    "2002" = "numeric",
+    "2003" = "numeric",
+    "2004" = "numeric",
+    "2005" = "numeric",
+    "2006" = "numeric",
+    "2007" = "numeric",
+    "2008" = "numeric",
+    "2009" = "numeric",
+    "2010" = "numeric",
+    "2011" = "numeric",
+    "2012" = "numeric"
+  ))
 ```
 
 Use the following test to check your work.
@@ -207,7 +231,7 @@ What we'll do is continually run `lagfill` until we reduce `countna` to zero. We
 ```{r q4-task}
 ## Choose variables to lag-fill
 ## TASK: Choose the appropriate variables to lag-fill
-vars_lagged <- c()
+vars_lagged <- c("region", "sub_region","territory","source","org")
 
 ## NOTE: No need to edit this
 ## Trim head and notes
@@ -221,6 +245,7 @@ while (countna(df_q4, vars_lagged) > 0) {
     df_q4 %>%
     lagfill(vars_lagged)
 }
+df_q4
 ```
 
 And we're done! All of the particularly tricky wrangling is now done. You could now use pivoting to tidy the data into long form.

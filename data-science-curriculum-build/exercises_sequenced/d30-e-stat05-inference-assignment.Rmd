@@ -19,6 +19,7 @@ library(rsample)
 ```
 
 ## The Core Idea: Resampling with Replacement
+
 <!-- ------------------------- -->
 
 In the previous exercise (`e-stat04-population`) we learned about the difference between a population and a sample. We also talked about sampling distributions---a *sampling distribution* is a theoretical distribution where we repeatedly gather a sample (of fixed size $n$) from the population, and compute the same summary statistic each time. The distribution of the summary statistic is the sampling distribution.
@@ -105,7 +106,7 @@ This is the core idea of resampling. But to simulate a sampling distribution, we
 
 ### Efficient resampling
 
-The code we just saw is computationally wasteful, since it stores the same data in many copies. So, programmers have written efficient packages to support resampling methods. We will use the `rsample` package for resampling in this class. The `bootstraps()` function resamples with replacement a desired number of `times`. 
+The code we just saw is computationally wasteful, since it stores the same data in many copies. So, programmers have written efficient packages to support resampling methods. We will use the `rsample` package for resampling in this class. The `bootstraps()` function resamples with replacement a desired number of `times`.
 
 *Note*: Bootstrap resampling is just one of many kinds of resampling methods. It's called "bootstrapping" because we're "pulling ourselves up by our own bootstraps", in the sense that we're only using the sample we have at hand.
 
@@ -187,14 +188,34 @@ df_demo <-
 df_demo 
 ```
 
-### __q1__ Modify the code
+### **q1** Modify the code
 
 Copy and modify the previous code to estimate a sampling distribution for the *standard deviation*. Provide this as a column `sample_sd`.
 
 ```{r q1-task}
 ## TASK: Adapt the code given in the previous chunk
 df_q1 <-
-  df_data_norm
+  df_data_norm %>% 
+  # Create the bootstrap resamplings
+  bootstraps(., times = 1000) %>% 
+  # Finicky code: Compute an estimate for each resampling (`splits` column)
+  mutate(
+    # The `map_*` family of functions iterates a provided function over a column
+    sample_sd = map_dbl(
+      # Chosen column
+      splits,
+      # Function we provide (defined inline)
+      function(split_df) {
+        # First, we use `analysis()` to translate the split into usable data
+        split_df %>% 
+          analysis() %>% 
+          # Then, we carry out whatever analysis we want
+          summarize(sample_sd = sd(x)) %>% 
+          # One last wrangling step
+          pull(sample_sd)
+      }
+    )
+  )
 
 df_q1
 ```
@@ -226,7 +247,7 @@ df_q1 %>%
 
 This plot gives us an (approximate) sampling distribution for the standard deviation. A reasonable next step would be to compute the *standard error*.
 
-### __q2__ Compute the standard error
+### **q2** Compute the standard error
 
 Compute the standard error for the mean by completing the code below.
 
@@ -249,7 +270,7 @@ df_q2 <-
     )
   ) %>% 
 # TODO: Complete the following code
-  # summarize(se = ?)
+  summarize(se = sd(sample_mean))
 
 df_q2
 ```
@@ -267,7 +288,7 @@ print("Great job!")
 
 We can use a sampling distribution to build a "reasonable interval" for the population value we're trying to estimate. We can do this by taking quantiles of the distribution.
 
-### __q3__ Quantiles of the sampling distribution
+### **q3** Quantiles of the sampling distribution
 
 Compute the lower and upper quantiles of the sampling distribution for the mean, such that 0.99 of the distribution is contained within the endpoints, and an *equal* amount of the distribution lands on either side outside the endpoints.
 
@@ -281,8 +302,8 @@ df_q3 <-
   df_demo %>% 
   summarize(
 # task_begin
-    # mean_lo = ?,
-    # mean_up = ?,
+     mean_lo = quantile(sample_mean,alpha/2),
+     mean_up = quantile(sample_mean,1-alpha/2),
 # task_end
   )
 ```
@@ -328,16 +349,19 @@ print("Great job!")
 These upper and lower quantiles construct a *confidence interval*, an important tool for quantifying uncertainty. We'll discuss the interpretation of confidence intervals in `e-stat07-clt`. However, if you'd like a preview, [this animation](https://seeing-theory.brown.edu/frequentist-inference/index.html) is the best visual explain I've found on how confidence intervals are constructed [3].
 
 <!-- include-exit-ticket -->
+
 # Exit Ticket
+
 <!-- -------------------------------------------------- -->
 
 Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-stat05-inference-assignment.Rmd).
 
 ## Notes
+
 <!-- -------------------------------------------------- -->
 
 [1] This is because `rsample` does some fancy stuff under the hood. Basically `bootstraps` does not make any additional copies of the data; the price we pay for this efficiency is the need to call `analysis()`.
 
 [2] For a slightly more mathematical treatment of the bootstrap, try [these MIT course notes](https://ocw.mit.edu/courses/mathematics/18-05-introduction-to-probability-and-statistics-spring-2014/readings/MIT18_05S14_Reading24.pdf)
 
-[3] [This](https://seeing-theory.brown.edu/frequentist-inference/index.html) **the best** visualization of the confidence interval concept that I have ever found. Click through Frequentist Inference > Confidence Interval to see the animation.
+[3] [This](https://seeing-theory.brown.edu/frequentist-inference/index.html) **the best** visualization of the confidence interval concept that I have ever found. Click through Frequentist Inference \> Confidence Interval to see the animation.
