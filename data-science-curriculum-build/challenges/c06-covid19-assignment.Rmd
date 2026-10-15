@@ -330,12 +330,34 @@ top10deaths_per100K
 
 - Loving county has small population which makes the cases per 100k much larger
 - When did these "largest values" occur?
-  - 2022 from february to may
+  - 2022 from February to May
 
 ## Self-directed EDA
 <!-- ------------------------- -->
 
 ### __q8__ Drive your own ship: You've just put together a very rich dataset; you now get to explore! Pick your own direction and generate at least one punchline figure to document an interesting finding. I give a couple tips & ideas below:
+```{r}
+df_normalized %>%
+  filter(
+    state == "Illinois", # Focus on Illinois only
+    !is.na(fips), # fct_reorder2 can choke with missing data
+  ) %>%
+  filter(county %in% c("Cook","Peoria")) %>%
+  ggplot(
+    aes(date, cases_per100k, color = fct_reorder2(county, date, cases_per100k))
+  ) +
+  geom_line() +
+  #scale_y_log10() +
+  scale_color_discrete(name = "County") +
+  theme_minimal() +
+  labs(
+    x = "Date",
+    y = "cases (per 100,000 persons)"
+  )
+
+
+```
+
 
 ### Ideas
 <!-- ------------------------- -->
@@ -348,6 +370,8 @@ top10deaths_per100K
 - Your own idea!
 
 **DO YOUR OWN ANALYSIS HERE**
+Looking at cases per 100,000k in Cook county which is the City of Chicago compared to Peoria County which is where the City of Peoria is located.
+I looked into the point where Peoria County surpassed Cook County in January of 2021. Based on looking at data from Peoria County is appears that December 2020 to January 2021 is when restaurants and bars started to re-open for indoor dinning.
 
 ### Aside: Some visualization tricks
 <!-- ------------------------- -->
