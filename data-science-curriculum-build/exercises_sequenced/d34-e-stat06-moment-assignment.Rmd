@@ -16,6 +16,7 @@ reading: 0
 *Topics*: Moments, moment arithmetic, standardization
 
 ## Moments
+
 <!-- -------------------------------------------------- -->
 
 Moments are a particular kind of statistic. There is a general, mathematical definition of a [moment](https://en.wikipedia.org/wiki/Moment_(mathematics)), but we will only need to talk about two in this class.
@@ -26,8 +27,7 @@ $$\mathbb{E}[X] = \int x \rho(x) dx.$$
 
 We've also seen the standard deviation $\sigma$. This is related to the variance $\sigma^2$, which is defined for a random variable $X$ in terms of the expectation
 
-$$\sigma^2 \equiv \mathbb{V}[X] = \mathbb{E}[(X - \mathbb{E}[X])^2].$$
-For instance, a standard normal $Z$ has
+$$\sigma^2 \equiv \mathbb{V}[X] = \mathbb{E}[(X - \mathbb{E}[X])^2].$$ For instance, a standard normal $Z$ has
 
 $$ \begin{aligned}
   \mathbb{E}[Z] &= 0 \\
@@ -37,11 +37,13 @@ $$ \begin{aligned}
 For future exercises, we'll need to learn how to do basic arithmetic with these two moments.
 
 ## Moment Arithmetic
+
 <!-- -------------------------------------------------- -->
 
 We will need to be able to do some basic arithmetic with the mean and variance. The following exercises will help you remember this basic arithmetic.
 
 ## Expectation
+
 <!-- ------------------------- -->
 
 The expectation is *linear*, that is
@@ -50,13 +52,13 @@ $$\mathbb{E}[aX + c] = a \mathbb{E}[X] + c.$$
 
 We can use this fact to compute the mean of simply transformed random variables.
 
-### __q1__ 
+### **q1**
 
 Compute the mean of $2 Z + 3$, where $Z$ is a standard normal.
 
 ```{r q1-task}
 ## TASK: Compute the mean of 2 Z + 3
-E_q1 <- NA_real_
+E_q1 <- 3
 ```
 
 Use the following test to check your answer.
@@ -71,13 +73,13 @@ Since the expectation is linear, it also satisfies
 
 $$\mathbb{E}[aX + bY] = a \mathbb{E}[X] + b \mathbb{E}[Y].$$
 
-### __q2__ 
+### **q2**
 
 Compute the mean of $2 Z_1 + 3 Z_2$, where $Z_1, Z_2$ are separate standard normals.
 
 ```{r q2-task}
 ## TASK: Compute the mean of 2 Z1 + 3 Z2
-E_q2 <- NA_real_
+E_q2 <- 2*0 + 3*0
 ```
 
 Use the following test to check your answer.
@@ -89,19 +91,20 @@ print("Great!")
 ```
 
 ## Variance
+
 <!-- ------------------------- -->
 
 Remember that variance is the square of standard deviation. Variance satisfies the property
 
 $$\mathbb{V}[aX + c] = a^2 \mathbb{V}[X].$$
 
-### __q3__ 
+### **q3**
 
 Compute the variance of $2 Z + 3$, where $Z$ is a standard normal.
 
 ```{r q3-task}
 ## TASK: Compute the mean of 2 Z + 3
-V_q3 <- NA_real_
+V_q3 <- 2^2
 ```
 
 Use the following test to check your answer.
@@ -114,16 +117,15 @@ print("Well done!")
 
 The variance of a *sum* of random variables is a bit more complicated
 
-$$\mathbb{V}[aX + bY] = a^2 \mathbb{V}[X] + b^2 \mathbb{V}[Y] + 2ab \text{Cov}[X, Y],$$
-where $\text{Cov}[X, Y]$ denotes the [covariance](https://en.wikipedia.org/wiki/Covariance) of $X, Y$. Covariance is closely related to correlation, which we discussed in `e-stat03-descriptive`. If two random variables $X, Y$ are *uncorrelated*, then $\text{Cov}[X, Y] = 0$.
+$$\mathbb{V}[aX + bY] = a^2 \mathbb{V}[X] + b^2 \mathbb{V}[Y] + 2ab \text{Cov}[X, Y],$$ where $\text{Cov}[X, Y]$ denotes the [covariance](https://en.wikipedia.org/wiki/Covariance) of $X, Y$. Covariance is closely related to correlation, which we discussed in `e-stat03-descriptive`. If two random variables $X, Y$ are *uncorrelated*, then $\text{Cov}[X, Y] = 0$.
 
-### __q4__ 
+### **q4**
 
 Compute the variance of $2 Z_1 + 3 Z_2$, where $Z_1, Z_2$ are *uncorrelated* standard normals.
 
 ```{r q4-task}
 ## TASK: Compute the variance of 2 Z1 + 3 Z2
-V_q4 <- NA_real_
+V_q4 <- 2^2 + 3^2
 ```
 
 Use the following test to check your answer.
@@ -135,11 +137,12 @@ print("Well done!")
 ```
 
 ## Standardization
+
 <!-- ------------------------- -->
 
 The following two exercises illustrate two important transformations.
 
-### __q5__ 
+### **q5**
 
 Compute the mean and variance of $(X - 1) / 2$, where
 
@@ -147,8 +150,8 @@ $$\mathbb{E}[X] = 1, \mathbb{V}[X] = 4$$.
 
 ```{r q5-task}
 ## TASK: Compute the mean and variance
-E_q3 <- NA_real_
-V_q3 <- NA_real_
+E_q3 <- 0
+V_q3 <- 1
 ```
 
 Use the following test to check your answer.
@@ -162,14 +165,14 @@ print("Well done!")
 
 This process of centering (setting the mean to zero) and scaling a random variable is called *standardization*. For instance, if $X$ is a normal random variable, then $(X - \mu) / \sigma = Z$ is a standard normal.
 
-### __q6__ 
+### **q6**
 
 Compute the mean and variance of $1 + 2 Z$, where $Z$ is a standard normal.
 
 ```{r q6-task}
 ## TASK: Compute the mean and variance
-E_q4 <- NA_real_
-V_q4 <- NA_real_
+E_q4 <- 1
+V_q4 <- 2^2
 ```
 
 Use the following test to check your answer.
@@ -184,6 +187,7 @@ print("Excellent!")
 This example illustrates that we can create a normal with desired mean and standard deviation by transforming a standard normal $\mu + \sigma Z = X$.
 
 ## Standard Error
+
 <!-- ------------------------- -->
 
 The variance satisfies the property
@@ -198,7 +202,7 @@ is the *covariance* between $X$ and $Y$. If $X, Y$ are independent, then the cov
 
 Using this expression, we can prove that the standard error of the sample mean $\overline{X}$ is $\sigma / \sqrt{n}$.
 
-### __q7__ (Bonus) Prove an equality
+### **q7** (Bonus) Prove an equality
 
 Use the identity above to prove that,
 
@@ -213,7 +217,9 @@ $$\sqrt{\mathbb{V}[\overline{X}]}$$
 is called the *standard error of the mean*; more generally the *standard error* for a statistic is the standard deviation of its sampling distribution. We saw this idea in `e-stat04-population`, and will return to it in `e-stat07-clt`.
 
 <!-- include-exit-ticket -->
+
 # Exit Ticket
+
 <!-- -------------------------------------------------- -->
 
 Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-stat06-moment-assignment.Rmd).

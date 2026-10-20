@@ -48,13 +48,16 @@ diamonds %>%
 ```{r q2-task}
 ## TASK: Determine the levels of the variable
 ## TODO: Your code here!
-
+gapminder %>%
+  pull(continent) %>%
+  levels()
 ## TASK: Determine what order the factors are listed in.
 ```
 
 **Observations**:
 
 - How are the factor levels ordered?
+alphabeticlly
 - What---if any---relation does the order of the factor levels have to trends in the data?
 
 
@@ -68,12 +71,21 @@ factors. For instance, we can assign manual factor levels with the function
 Copy your code from q2 and introduce a mutate using `fct_relevel()` to reorder `continent`. Choose which levels to reorder and what order in which to put them. Note how the resulting order is changed when you call `levels()` at the end of the pipe.
 
 ```{r q3-task}
-
+gapminder %>%
+  mutate(
+    continent = fct_relevel(
+      continent,
+      "Europe"
+    )
+  ) %>%
+  pull(continent) %>%
+  levels()
 ```
 
 **Observations**:
 
 - How are the factor levels (re)ordered?
+only the one I told to move 
 
 ## Visual Tricks
 <!-- -------------------------------------------------- -->
@@ -83,7 +95,6 @@ sort them on another variable, rather
 
 ```{r mpg-unsorted}
 mpg %>%
-  mutate(manufacturer = fct_reorder(manufacturer, cty)) %>%
 
   ggplot(aes(manufacturer, cty)) +
   geom_boxplot() +
@@ -99,7 +110,7 @@ another variable `x`. This will "match" the order between the two.
 ## TASK: Modify the following code to sort the factor `manufacturer` based on
 ## `cty`.
 mpg %>%
-
+  mutate(manufacturer = fct_reorder(manufacturer, cty)) %>%
   ggplot(aes(manufacturer, cty)) +
   geom_boxplot() +
   coord_flip()
@@ -124,7 +135,7 @@ Use `fct_reorder2()` to sort `country` to match the order of `x = year, y = pop`
 ## and `pop`.
 gapminder %>%
   filter(dense_rank(country) <= 7) %>%
-
+  mutate(country = fct_reorder2(country, year, pop)) %>%
   ggplot(aes(year, pop, color = country)) +
   geom_line() +
   scale_y_log10()
@@ -132,7 +143,8 @@ gapminder %>%
 
 **Observations**:
 
-- How does `fct_reorder2()` sort factors?
+- How does `fct_reorder2()` sort factors? 
+the legend is in the order of the lines appearing on the graph
 
 This *small, simple trick* is extremely helpful for creating easily-readable
 line graphs.
