@@ -275,13 +275,13 @@ df_q4 %>%
 *Observations*
 
 - What is a range of plausible values, based on the sampling distribution you've generated?
-  - The range of plausible values based on the sampling distribution that I generated goes from 2.7 to 3.6.
+  - The range of plausible values based on the sampling distribution that I generated goes from about 2.5 to about 3.5.
 
 ### **q5** Bootstrap percentile confidence interval
 
 Compute a bootstrap confidence interval for $\pi$ at the 95% confidence level (`alpha = 0.05`).
 
-*Hint*: You learned how to do this in `e-stat05-inference` and `e-stat06-clt`.
+*Hint*: You learned how to do this in `e-stat05-inference` and `e-stat07-clt`.
 
 ```{r}
 ## TASK: Compute a bootstrap confidence interval at the 95% level 
@@ -307,11 +307,12 @@ Compute a CLT-based confidence interval for $\pi$ at the 95% confidence level (`
 
 ```{r q6-task}
 df_q6 <- 
-  df_q4 %>% 
+  df_q1 %>% 
+  mutate(stat = stat(x,y)) %>%
   summarize(
     # TODO: Compute pi_lo and pi_up
-    pi_lo = mean(pi_est) - qnorm( 1 - (1 - 0.95) / 2 ) * sd(pi_est) / sqrt(1000),
-    pi_up = mean(pi_est) + qnorm( 1 - (1 - 0.95) / 2 ) * sd(pi_est) / sqrt(1000)
+    pi_lo = mean(stat) - qnorm( 1 - (1 - 0.95) / 2 ) * sd(stat) / sqrt(100),
+    pi_up = mean(stat) + qnorm( 1 - (1 - 0.95) / 2 ) * sd(stat) / sqrt(100)
   )
 df_q6
 ```
@@ -320,9 +321,9 @@ df_q6
 
 - Does your intervals include the true value of $\pi$?
   - (Bootstrap CI: Yes, my bootstrap interval does include the true value of pi)
-  - (CLT CI: No, my CLT interval does not include the true value of pi)
+  - (CLT CI: Yes, my CLT interval does include the true value of pi)
 - How closely do your bootstrap CI and CLT CI agree?
-  - FIX THIS The bootstrap and CLT CIs are off by around 0.3 on the low end and 0.2 on the high end
+  - The bootstrap CI and CLT CI are with in three hundredths of each other.
 - Comment on the width of your CI(s). Would your estimate of $\pi$ be good enough for roughly estimating an area (e.g., to buy enough paint for an art project)? Would your estimate of $\pi$ be good enough for precisely calculating a trajectory (e.g., sending a rocket into orbit)?
   - The estimate of pi would be good enough for roughly estimating an area as it close to the true value of pi. Particularly when buying paint, a rough estimate of area is useful since it hard to exactly control the amount of paint being spread.
   - The estimate of pi would not be good enough to precisely calculate a trajectory as every decimal point that the trajectory is off by could entirely change the trajectory of the flight.
