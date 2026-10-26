@@ -1,7 +1,7 @@
 ---
 title: "The Islands, Part 1: Design"
-author: "(Your name here)"
-date: 202X-XX-XX
+author: "Emily Boyd"
+date: 2026-10-26
 output:
   github_document:
     toc: true
@@ -45,7 +45,6 @@ Make sure to commit both the challenge report (`report.md` file) and supporting 
 ```{r setup}
 library(tidyverse)
 library(rsample)
-
 filename_random <- "./data/helvig-random.csv"
 ```
 
@@ -66,15 +65,15 @@ NB. When Zach counted the homes (on 2025-01-08), he found 20 unoccupied out of 5
 **Observations**:
 
 - What is the total number of homes in Helvig?
-  - (Your response here)
+  - The total number of homes in Helvig is 625.
 - What is the number of unoccupied homes? (*Hint*: This is not given anywhere. You will have to count them!)
-  - (Your response here)
+  - The number of unoccupied home in Helvig is two. 
 - What percent of homes are *occupied*?
-  - (Your response here)
+  - The percentage of homes that are occupied is 99.68. 
 - Are there any sources of *real* uncertainty in the percent occupied you calculated?
-  - (Your response here)
+  - No there are not any sources of real uncertainty in the percent occupied that I calculated. 
 - Are there any sources of *erroneous* uncertainty in the percent occupied you calculated?
-  - (Your response here)
+  - No there are not any sources of erroneous uncertainty in the percent occupied that I calculated. 
 
 Zach looked at the first 25 homes in Helvig and recorded the `age` and `name` of every person in those homes. These people are provided in `helvig-seq.csv`.
 
@@ -98,6 +97,11 @@ Make sure to include in `df_q3` the counts as a column named `n`, and the preval
 ## TASK: Compute the prevalence and sort
 df_q3 <- 
   df_sample_seq %>% 
+  mutate(
+    last_name = str_extract(name, pattern = "[[:alpha:]]+$")
+    ) %>%
+  count(last_name, sort = TRUE, name = "n") %>%
+  mutate(p = n/ sum(n))
 ## TODO: Complete this code
 
 df_q3
@@ -121,9 +125,9 @@ print("Very good!")
 *Observations*
 
 - What last name is most prevalent in `df_sample_seq`?
-  - (Your response here)
+  - Sorenson
 - Is this sample representative of *all* houses in Helvig? Why or why not?
-  - (Your response here)
+  - No this sample is not representative of all of the houses in Helvig because it only includes the first twenty five houses. 
 
 In the exercises, we talked about the importance of random sampling. In the previous challenge, we were able to *simulate* a random sample by running a few lines of code. But in the real world, we have to work harder to gather a random sample. We'll do this in two stages: *plan* then *collect*.
 
@@ -135,8 +139,8 @@ Complete the code below to draw a sample of size `n=25`. Replace `n_houses` with
 ## TASK: Set the parameters for this code block
 
 ## Select a random sample of houses
-# n_houses <- ??? # Total number of houses
-# n_sample <- ???  # Desired sample size
+n_houses <- 625 # Total number of houses
+n_sample <- 25  # Desired sample size
 
 set.seed(101)   # Set a seed for reproducibility
 
@@ -225,8 +229,8 @@ print("Great work!")
 *Observations*
 
 - Which sample---sequential or random---is more *representative* of all homes Helvig? Why?
-  - (Sequential or random?)
-  - (Write your 'why' here.)
+  - Random sampling is more representative of all of the homes in Helvig. 
+  - One reason why random sampling would be more representative is random sampling avoids potential clustering when samples are sequential.
 
 ### __q6__ Find common names: Random sample
 
@@ -244,9 +248,9 @@ df_sample_random %>%
 *Observations*
 
 - Did you find any highly prevalent names using `df_sample_random` that you *didn't* find in q3 (using `df_sample_seq`)? Write them here.
-  - (Your response here)
+  - I found Sato and Collins are highly prevalent names which were not highly prevalent in df_sample_seq
 - Is there any reason that people with the same last name might tend to *live near each other*?
-  - (Your response here)
+  - People with the same last name might tent to live near each other becuase people like to live close to family members. If your grandmother lives on the block or street, you are likely to see your grandmother more offten. 
 
 You should have found some difference between the sequential and random samples. This is because we're only working with a *sample*---a limited number of observations from the entire population. We could go to every single house in Helvig and determine *exactly* how many people of each name there are (that's called a *census*), but the point of statistical inference is that we can make statements about a population using only a sample. What makes statistical inference powerful is that we can determine *how confident* we should be in our results, based on the size of our sample.
 
@@ -261,11 +265,21 @@ Complete the code below to write a helper function. Your function will compute t
 #  (provided in a `name` column), removes any invalid rows, and computes the
 #  proportion of individuals with the user-specified `last` name (returned
 #  in an `estimate` column).
-name_prevalence <- function(df, last = "Collins") {
+name_prevalence <- function(df, last = "Sato") {
   df %>% 
+    filter_out(name = NA) %>%
+    mutate(extracted = str_extract(name, "\\w+$")) %>%
+    count(extracted, sort = TRUE) %>% 
+    mutate(p = n / sum(n)) %>%
+    filter(extracted == last) %>%
+    summarise(
+      term = extracted,
+      estimate = p
+    )
     ## TODO: Finish this code
-    mutate(term = "prevalence")
+    #mutate(term = "prevalence")
 }
+
 ```
 
 Use the following code to check your results.
@@ -280,7 +294,7 @@ last_most <-
   arrange(desc(n)) %>% 
   slice(1) %>% 
   pull(last)
-
+last_most
 # Ensure correct columns
 assertthat::assert_that(
   setequal(
@@ -350,11 +364,11 @@ Click on a single islander (you can do this from one of the houses), and take a 
 
 *Hint*: The videos from the [Visitor Center](https://islands.smp.uq.edu.au/visitors.php) will be especially helpful for getting some ideas.
 
-- (Possible measurement #1)
-- (Possible measurement #2)
-- (Possible measurement #3)
+- Occupation
+- viral infection admissions 
+- time it takes to solve a 3x3x3 cube
 
-### __q10__ Planning a study (TEAMWORK)
+### __q10__ Planning a study (TEAMWORK) turning this question in separately due to teams
 
 Challenge 10 will be a team assignment where you plan and execute a statistical study using The Islands. You should meet with your learning team for Challenge 10 to complete the steps below---though everyone is responsible for including the plan in their individual Challenge 08 submission.
 
