@@ -56,17 +56,17 @@ Other physical quantities exhibit both real and erroneous variability. Since the
 ### __q1__ Imagine the manufacturer selects one part and performs multiple non-destructive tensile tests on that single part, under similar conditions. The measured elasticity from each test is slightly different. Is this variability real or erroneous?
 
 - real or erroneous?
-- (Why?)
+- Erroneous, same property more than one test
 
 ### __q2__ Imagine the manufacturer selects multiple parts and---for each part---performs multiple non-destructive tensile tests, all under similar conditions. The measured elasticity values for each part are averaged to provide a more reliable estimate for each part. Upon comparing the parts, each averaged value is fairly different. Is this variability real or erroneous?
 
 - real or erroneous?
-- (Why?)
+- Real, different parts can have different values
 
 ### __q3__ Now the manufacturer selects multiple parts and performs a destructive tensile test to characterize the strength of each part, with tests carried out under similar conditions. The measured strength values exhibit a fair amount of variability. Is this variability real or erroneous?
 
 - real or erroneous?
-- (Why?)
+- idk please give more info 
 
 ## Analyzing Data
 
@@ -120,11 +120,11 @@ df_meas %>%
 
 *Observations*
 - Which is larger: The variability due to noise, or the variability due to deviation?
-  - (Your response here)
+  - due to deviation 
 
 ### __q5__ Imagine `Y` represents the measured strength of the cast steel. Would it be safe to simply average all of the values and use that as the material strength for design?
 
-- (Your response here)
+- no
 
 ### __q6__ Compute the `0.1` quantile of the `Y` measurements. Would this be a conservative value to use as a material strength for design?
 
@@ -136,7 +136,10 @@ Y_mean <-
   summarize(Y_mean = mean(Y)) %>%
   pull(Y_mean)
 
-Y_lo <- NA_real_ # Complete the quantile calculation
+Y_lo <- df_meas %>%
+  summarise(Y_lo = quantile(Y, p = 0.1)) %>%
+  pull(Y_lo)
+# Complete the quantile calculation
 
 # Compare the values
 Y_mean
@@ -157,7 +160,7 @@ print("Nice!")
 - How does `Y_lo` compare with `Y_mean`?
   - (Your response here)
 - Would the 10% quantile `Y_lo` be a conservative material strength for design?
-  - (Your response here)
+  - ya sure
 
 ### __q7__ The following code reduces the variability due to noise before computing the quantile. Run the code below, and answer the questions under *Observations* below.
 
@@ -182,7 +185,7 @@ Y_lo_improved
 - What features about the data collection / dataset `df_meas` enable the calculation of `Y_lo_improved`?
   - (Your response here)
 - Measuring the strength of a part is a *destructive* experiment. Would it be possible to gather a dataset like `df_meas` in reality?
-  - (Your response here)
+  - no
 - For what real properties (material, or otherwise) would it be possible to collect data like `df_meas`?
   - (Your response here)
 
