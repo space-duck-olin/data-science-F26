@@ -82,14 +82,24 @@ Based on your results, can you reject the null hypothesis **H_0** for the popula
 ```{r q1-task}
 ## TASK: Compute a confidence interval on the mean, use to answer the question
 ## above
-df_sample
+df_sample %>%
+  summarize(
+    price_mean = mean(price),
+    price_sd = sd(price),
+    price_lo = price_mean - 1.96 * price_sd / sqrt(n()),
+    price_hi = price_mean + 1.96 * price_sd / sqrt(n())
+  ) %>%
+  select(price_lo, price_hi)
+
 price_threshold
 ```
 
 **Observations**:
 
 - Can you reject the null hypothesis **H_0**?
+no becuase the low ci is below the threashold 
 - How does this affect your decision?
+We do not buy diamonds from the guy
 
 ## Different Scenario, Different Hypotheses
 <!-- -------------------------------------------------- -->
@@ -125,12 +135,32 @@ Use the techniques you learned in `e-stat09-bootstrap` to estimate a 99-percent 
 ```{r q2-task}
 ## TASK: Estimate a confidence interval for the proportion of high-cut diamonds
 ## in the population. Look to `e-stat09-bootstrap` for starter code.
+set.seed(101)
+alpha <- 0.01
+
+fit_fun <- function(split_df) {
+  analysis(split_df) %>%
+    summarize(estimate = mean((cut == "Premium") | (cut == "Ideal"))) %>%
+    pull(estimate)
+}
+
+df_q2 <- 
+  df_sample %>% 
+  bootstraps(., times = 1000) %>% 
+  mutate(p_hat = map_dbl(splits, fit_fun)) %>% 
+  summarise(
+    p_low = quantile(p_hat,alpha/2),
+    p_hi = quantile(p_hat,1-alpha/2)
+  )
+df_q2
 ```
 
 **Observations**:
 
 - Can you reject the null hypothesis **H_0**?
+Yes, the low ci is above the cut off
 - How does this affect your decision?
+this means that I will buy diamonds from this guy
 
 ## Closing Thoughts
 <!-- -------------------------------------------------- -->

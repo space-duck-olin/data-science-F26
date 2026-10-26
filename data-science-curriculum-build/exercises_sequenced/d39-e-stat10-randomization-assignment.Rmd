@@ -105,11 +105,11 @@ experimental_design %>%
 *Observations*
 
 - Which experimental condition do you *expect* to have greater yield? The Treatment `T` or Control `C`?
-  - (Your response here)
+  - T
 - Which experimental condition do your results suggest has a higher mean yield? The Treatment `T` or Control `C`?
-  - (Your response here)
+  - C
 - The true difference between the treatment mean and control mean is such that the treatment yield should be `1` unit higher. How does your difference compare with that difference?
-  - (Your response here)
+  - wrong sign
 
 ## Confound - Increased yield due to proximity to the river!
 
@@ -156,7 +156,7 @@ Try defining a different order of the plots to overcome the confound (river).
 
 ```{r q2-task}
 ## TODO: Define your own experimental design
-your_design <- NA_character_
+your_design <- c("C", "T", "C", "T", "C", "T")
 
 ## NOTE: No need to edit; use this to simulate your design
 your_design %>%
@@ -171,11 +171,11 @@ your_design %>%
 *Observations*
 
 - Which experimental condition do your results suggest has a higher mean yield? The Treatment `T` or Control `C`?
-  - (Your response here)
+  - T
 - The true difference between the treatment mean and control mean is such that the treatment yield should be `1` unit higher. How does your difference compare with that difference?
   - (Your response here)
 - What effects are you seeing? The effect of the Treatment `T` *only*, or the combined effects of the Treatment and the river? How does this affect your estimate of the effect of the treatment?
-  - (Your response here)
+  - over estimates 
 
 ## Randomization to the rescue!
 
