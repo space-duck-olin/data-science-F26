@@ -338,6 +338,8 @@ df_interval_bootstrap <-
     estimate = map(
       splits,
       function(split_df) {
+        analysis(split_df) %>% 
+          name_prevalence(., last = "Sato")
 ## TODO: Finish this code, using the name_prevalence() helper you implemented
 ## HINT: Remember that you need to use analysis() when operating on split_df
       }
