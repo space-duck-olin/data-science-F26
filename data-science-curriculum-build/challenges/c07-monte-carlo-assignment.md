@@ -197,7 +197,11 @@ square $x \in [0, 1]$ and $y \in [0, 1]$.
 ``` r
 ## TASK: Choose a sample size and generate samples
 n <- 100 # Choose a sample size
-df_q1 <- tibble(x = runif(n,0,1),y = runif(n,0,1)) # Generate the data
+df_q1 <- 
+  tibble(
+    x = runif(n,0,1),
+    y = runif(n,0,1)
+  ) # Generate the data
 ```
 
 Use the following to check that you’ve used the correct variable names.
@@ -248,10 +252,12 @@ Answer the questions below.
 ``` r
 ## TASK: Finish implementing this function
 stat <- function(x, y) {
-  value <- (sqrt(x^2 + y^2))
-  stat = value <= 1
-  replace_with <- 1*4
-  stat[stat == TRUE] <- replace_with
+ # value <- (sqrt(x^2 + y^2))
+  ind = sqrt(x^2+y^2) <= 1
+  stat = 4 * ind
+  #stat = value <= 1
+  #replace_with <- 1*4
+  #stat[stat == TRUE] <- replace_with
   return(stat)
   # TODO: Finish implementing this function
 }
@@ -331,7 +337,7 @@ df_q3
     ## # A tibble: 1 × 1
     ##   pi_est
     ##    <dbl>
-    ## 1   2.92
+    ## 1   3.08
 
 Use the following to check that you’ve used the correct variable names.
 (NB. This does not check correctness.)
@@ -439,7 +445,7 @@ df_q5
     ## # A tibble: 1 × 2
     ##   pi_lo pi_up
     ##   <dbl> <dbl>
-    ## 1  2.56  3.28
+    ## 1  2.72  3.44
 
 ### **q6** CLT confidence interval
 
@@ -469,7 +475,7 @@ df_q6
     ## # A tibble: 1 × 2
     ##   pi_lo pi_up
     ##   <dbl> <dbl>
-    ## 1  2.57  3.27
+    ## 1  2.75  3.41
 
 **Observations**:
 

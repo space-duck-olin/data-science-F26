@@ -118,7 +118,11 @@ Pick a sample size $n$ and generate $n$ points *uniform randomly* in the square 
 ```{r q1-task}
 ## TASK: Choose a sample size and generate samples
 n <- 100 # Choose a sample size
-df_q1 <- tibble(x = runif(n,0,1),y = runif(n,0,1)) # Generate the data
+df_q1 <- 
+  tibble(
+    x = runif(n,0,1),
+    y = runif(n,0,1)
+  ) # Generate the data
 
 ```
 
@@ -153,10 +157,12 @@ Answer the questions below.
 ```{r q2-task}
 ## TASK: Finish implementing this function
 stat <- function(x, y) {
-  value <- (sqrt(x^2 + y^2))
-  stat = value <= 1
-  replace_with <- 1*4
-  stat[stat == TRUE] <- replace_with
+ # value <- (sqrt(x^2 + y^2))
+  ind = sqrt(x^2+y^2) <= 1
+  stat = 4 * ind
+  #stat = value <= 1
+  #replace_with <- 1*4
+  #stat[stat == TRUE] <- replace_with
   return(stat)
   # TODO: Finish implementing this function
 }
