@@ -190,7 +190,7 @@ df_sample_random <-
 
 Use the following to check your work.
 
-```{r q3-tests}
+```{r q5-tests}
 ## NOTE: No need to change this
 # Check that the dataset has the correct column names
 assertthat::assert_that(setequal(
@@ -250,7 +250,7 @@ df_sample_random %>%
 - Did you find any highly prevalent names using `df_sample_random` that you *didn't* find in q3 (using `df_sample_seq`)? Write them here.
   - I found Sato and Collins are highly prevalent names which were not highly prevalent in df_sample_seq
 - Is there any reason that people with the same last name might tend to *live near each other*?
-  - People with the same last name might tent to live near each other becuase people like to live close to family members. If your grandmother lives on the block or street, you are likely to see your grandmother more offten. 
+  - People with the same last name might tent to live near each other becuase people like to live close to family members. If your grandmother lives on the block or street, you are likely to see your grandmother more often. 
 
 You should have found some difference between the sequential and random samples. This is because we're only working with a *sample*---a limited number of observations from the entire population. We could go to every single house in Helvig and determine *exactly* how many people of each name there are (that's called a *census*), but the point of statistical inference is that we can make statements about a population using only a sample. What makes statistical inference powerful is that we can determine *how confident* we should be in our results, based on the size of our sample.
 
@@ -406,6 +406,6 @@ The Islands allows you to ask islanders to complete tasks. If you just take meas
   - Be specific. For instance, if you're going to collect a random sample, how will you enumerate all of the things to be sampled?
   - Write a protocol. Document step-by-step instructions that your team will follow. That way, you can feasibly split up data collection among the whole team, while making sure each team member doesn't make ad hoc decisions that introduce bias into your results.
 - (How will you ensure the data is representative of your chosen population?)
-- (For experiments only: How will you ensure any effects you observe are due to the treatment, and not due to other factors?)
+- (For experiments only: How will you ensure any effects you observe are due to the treatment, and not d`ue to other factors?)
 - (How will you choose your sample size?)
   - This should be a mix of how confident you want to be in your results, and what is actually *feasible* for your research team.
