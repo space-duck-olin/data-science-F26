@@ -136,7 +136,10 @@ To join these datasets, we'll need to use [FIPS county codes](https://en.wikiped
 
 ```{r q3-task}
 ## TASK: Create a `fips` column by extracting the county code
-df_q3 <- df_pop %>% mutate(fips = str_sub(Geography,-5,-1))
+df_q3 <- df_pop %>% 
+  mutate(
+    fips = str_sub(Geography, -5,-1)
+  )
 ```
 
 Use the following test to check your answer.
@@ -156,7 +159,12 @@ print("Very good!")
 
 ```{r q4-task}
 ## TASK: Join df_covid and df_q3 by fips.
-df_q4 <- left_join(df_covid,df_q3,join_by('fips'))
+df_q4 <- 
+  left_join(
+    df_covid,
+    df_q3,
+    join_by('fips')
+  )
 ```
 
 Use the following test to check your answer.
@@ -292,7 +300,7 @@ Compute the mean and standard deviation for `cases_per100k` and `deaths_per100k`
 
 ```{r q6-task}
 ## TASK: Compute mean and sd for cases_per100k and deaths_per100k
-mean_casep100K <- df_normalized$cases_per100k %>% mean(na.rm = TRUE)
+mean_casep100K <- df_normalized %>% filter(date = 2020-03-13) %>% mean(cases_per100k,na.rm = TRUE)
 mean_deathp100K <- df_normalized$deaths_per100k %>% mean(na.rm = TRUE)
 sd_casep100K <- df_normalized$cases_per100k %>% sd(na.rm = TRUE)
 sd_deathp100K <- df_normalized$deaths_per100k %>% sd(na.rm = TRUE)
@@ -305,7 +313,7 @@ sd_deathp100K
 - Which rows did you pick?
   - I picked the rows that have numbers in them.
 - Why?
-  - I picked these rows becuase R will not do the math with NA values
+  - I picked these rows because R will not do the math with NA values
 
 ### __q7__ Find and compare the top 10
 

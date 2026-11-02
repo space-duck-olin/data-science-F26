@@ -100,6 +100,7 @@ assertthat::assert_that(
 )
 
 print("Well done!")
+view(df_income)
 ```
 
 
@@ -121,6 +122,16 @@ df_q3 <-
   ) %>%
   mutate(across(contains("median"), as.numeric)) %>%
 ## TODO: Pivot the data, rename the columns
+  pivot_longer(
+    names_to = c(".value","category"),
+    names_pattern = "(Estimate|Margin of Error).*(\\d-person families)",
+    cols = -c("Geography","Geographic Area Name")
+  ) %>%
+  rename(
+    "geographic_area_name" = "Geographic Area Name",
+    "income_estimate" = "Estimate",
+    "income_moe" = "Margin of Error"
+  ) %>%
   glimpse()
 ```
 
@@ -152,7 +163,14 @@ $$\text{MOE} = 1.645 \times \text{SE}.$$
 
 ```{r q4-task}
 
-df_q4
+df_q4 <- df_q3 %>% 
+  mutate(
+  income_SE = income_moe / 1.645,
+  income_CV = income_SE / income_estimate,
+  income_lo = income_estimate - 2.576 * income_SE,
+  income_hi = income_estimate + 2.576 * income_SE
+  )
+
 ```
 
 Use the following tests to check your work:
@@ -207,8 +225,12 @@ One last wrangling step: We need to join the two datasets so we can compare popu
 
 ```{r q5-task}
 ## TODO: Join df_q4 and df_pop by the appropriate column
-
-df_data
+df_data <- 
+  left_join(
+    df_pop,
+    df_q4,
+    join_by('Geography')
+  )
 ```
 
 # Analysis
@@ -246,13 +268,13 @@ df_data %>%
 **Observations**:
 
 - Document your observations here.
-  - (Your response here)
-  - (Your response here)
-  - ...
+  - The fiver person families in Nantucket have the widest confidence interval.
+  - Hampden county has the lowest median income per two person families and overall. 
+  - The highest median income overall is five person families in Norfolk counties.
 - Can you confidently distinguish between household incomes in Suffolk county? Why or why not?
-  - (Your response here)
+  - I cannot confidently distinguish between household incomes in Suffolk county because the household incomes are very close to each other and sometimes on top of each other. 
 - Which counties have the widest confidence intervals?
-  - (Your response here)
+  - The counties that have the widest confidence are Nantucket, Dukes,and  Hampshire counties. 
 
 In the next task you'll investigate the relationship between population and uncertainty.
 
@@ -261,14 +283,18 @@ In the next task you'll investigate the relationship between population and unce
 *Hint*: Remember that standard error is a function of *both* variability (e.g. variance) and sample size.
 
 ```{r q7-task}
+df_data %>%
+  ggplot(aes(income_SE,population_estimate))+
+  geom_point()+
+  coord_flip()
 ```
 
 **Observations**:
 
 - What *overall* trend do you see between `SE` and population? Why might this trend exist?
-  - (Your response here)
+  - There is a decrease in SE with an increase in population. This trend might exist because it is easier to collect more data to decrease the number of outliers.
 - What does this *overall* trend tell you about the relative ease of studying small vs large counties?
-  - (Your response here)
+  - It is easier to study larger counties. 
 
 # Going Further
 <!-- ----------------------------------------------------------------------- -->
@@ -279,6 +305,7 @@ Now it's your turn! You have income data for every county in the United States: 
 
 ```{r q8-task}
 ## TODO: Pose and answer your own question about the data
+
 ```
 
 **Observations**:
