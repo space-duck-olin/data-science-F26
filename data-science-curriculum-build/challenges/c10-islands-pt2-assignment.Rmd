@@ -52,6 +52,27 @@ library(rsample)
 ### __q1__ Planning a study (TEAMWORK)
 
 While you provided this plan in c08 (Part 1), please include your plan here. In particular, describe how you updated your plan in response to feedback.
+```{r}
+n_houses <- 833 # Total number of houses
+n_sample <- 25  # Desired sample size
+
+set.seed(90)   # Set a seed for reproducibility
+
+df_numbers_random <- 
+  tibble(
+    house = sample(
+        1:n_houses,     # All integers from 1 to n_houses
+        n_sample,       # Size of our sample
+        replace = FALSE # Sample *WITHOUT* replacement
+      )
+  ) %>% 
+  # Arrange for our data collection convenience
+  arrange(house)
+
+df_numbers_random %>% 
+  pull(house)
+```
+
 
 #### Population
 
