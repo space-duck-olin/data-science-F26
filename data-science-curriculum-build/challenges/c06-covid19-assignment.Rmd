@@ -300,10 +300,22 @@ Compute the mean and standard deviation for `cases_per100k` and `deaths_per100k`
 
 ```{r q6-task}
 ## TASK: Compute mean and sd for cases_per100k and deaths_per100k
-mean_casep100K <- df_normalized %>% filter(date = 2020-03-13) %>% mean(cases_per100k,na.rm = TRUE)
-mean_deathp100K <- df_normalized$deaths_per100k %>% mean(na.rm = TRUE)
-sd_casep100K <- df_normalized$cases_per100k %>% sd(na.rm = TRUE)
-sd_deathp100K <- df_normalized$deaths_per100k %>% sd(na.rm = TRUE)
+mean_casep100K <- df_normalized %>% 
+  filter(date == "2020-03-13")%>% 
+  pull(cases_per100k) %>%
+  mean(na.rm = TRUE)
+mean_deathp100K <- df_normalized %>% 
+  filter(date == "2020-03-13")%>% 
+  pull(deaths_per100k) %>%
+  mean(na.rm = TRUE)
+sd_casep100K <- df_normalized %>% 
+  filter(date == "2020-03-13")%>% 
+  pull(cases_per100k) %>%
+  sd(na.rm = TRUE)
+sd_deathp100K <- df_normalized %>% 
+  filter(date == "2020-03-13")%>% 
+  pull(deaths_per100k) %>%
+  sd(na.rm = TRUE)
 mean_casep100K
 mean_deathp100K
 sd_casep100K 
@@ -311,9 +323,9 @@ sd_deathp100K
 ```
 
 - Which rows did you pick?
-  - I picked the rows that have numbers in them.
+  - I picked the rows that have numbers in them on March 13 2022.
 - Why?
-  - I picked these rows because R will not do the math with NA values
+  - I picked these rows because R will not do the math with NA values. I was interested in seeing what the cases were like the day that the state of Illinois shut down and school was moved online. 
 
 ### __q7__ Find and compare the top 10
 
@@ -323,6 +335,7 @@ Find the top 10 counties in terms of `cases_per100k`, and the top 10 in terms of
 ## TASK: Find the top 10 max cases_per100k counties; report populations as well
 top10cases_per100K <- df_normalized %>% 
   arrange(desc(cases_per100k)) %>% 
+  mutate(population = max(population))%>%
   select(population,county,date,cases_per100k) %>% 
   top_n(10)
 top10cases_per100K
@@ -337,6 +350,7 @@ top10deaths_per100K
 **Observations**:
 
 - Loving county has small population which makes the cases per 100k much larger
+- The numbers here are much larger than the numbers calculated in q6.
 - When did these "largest values" occur?
   - 2022 from February to May
 

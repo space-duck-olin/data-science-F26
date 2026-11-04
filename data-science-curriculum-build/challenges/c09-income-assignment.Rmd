@@ -1,7 +1,7 @@
 ---
 title: "US Income"
-author: "(Your name here)"
-date: 202X-XX-XX
+author: "Emily Boyd"
+date: 2026-11-04
 output:
   github_document:
     toc: true
@@ -100,7 +100,6 @@ assertthat::assert_that(
 )
 
 print("Well done!")
-view(df_income)
 ```
 
 
@@ -268,7 +267,7 @@ df_data %>%
 **Observations**:
 
 - Document your observations here.
-  - The fiver person families in Nantucket have the widest confidence interval.
+  - The five person families in Nantucket have the widest confidence interval.
   - Hampden county has the lowest median income per two person families and overall. 
   - The highest median income overall is five person families in Norfolk counties.
 - Can you confidently distinguish between household incomes in Suffolk county? Why or why not?
@@ -305,12 +304,34 @@ Now it's your turn! You have income data for every county in the United States: 
 
 ```{r q8-task}
 ## TODO: Pose and answer your own question about the data
+wid <- 0.5
 
+df_data %>%
+  filter(str_detect(geographic_area_name, "Illinois")) %>%
+  filter(category == "2-person families") %>%
+  mutate(
+    county = str_remove(geographic_area_name, " County,.*$"),
+    county = fct_reorder(county, income_estimate)
+  ) %>%
+  top_n(15) %>%
+
+  ggplot(aes(county, income_estimate, fill = population_estimate)) +
+  geom_col() +
+  coord_flip() +
+  labs(
+    title = "Top 15 Counties in Illinois for 2-person median income",
+    x = "County",
+    y = "Median Household Income"
+  )
 ```
 
 **Observations**:
 
-- Document your observations here
+- What counties in Illinois will have the highest median income for two person families?
+- What role does population play in what counties have the highest median income?
+- Dupage county has both the highest median income for two person families and the largest population estimate.
+- However there is not a direct correlation between having the most population and having the highest median income becuase Cook county which is not represented on the map is the most populated county in Illinois. 
+
 
 Ideas:
 
