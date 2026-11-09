@@ -130,12 +130,13 @@ you still need to count, because your numbers *will* be different!
   - The percentage of homes that are occupied is 99.68.
 - Are there any sources of *real* uncertainty in the percent occupied
   you calculated?
-  - No there are not any sources of real uncertainty in the percent
-    occupied that I calculated.
+  - Yes, it is possible that islanders moved around between towns and
+    islands. When islanders move, it would change the amount of occupied
+    houses.
 - Are there any sources of *erroneous* uncertainty in the percent
   occupied you calculated?
-  - No there are not any sources of erroneous uncertainty in the percent
-    occupied that I calculated.
+  - Yes, it is possible that I did not correctly county the number of
+    houses in the town.
 
 Zach looked at the first 25 homes in Helvig and recorded the `age` and
 `name` of every person in those homes. These people are provided in
@@ -581,13 +582,16 @@ df_interval_bootstrap
 
 - What is highest possible prevalence for your chosen name, based on the
   confidence interval you constructed?
-  - (Your response here)
+  - The highest possible prevalence for my chosen name is 0.2.
 - Note that we used the *random* sample with the bootstrap procedure in
   this task. Could we use the bootstrap to make a confidence interval
   using the sequential sample (`df_sample_seq`) that would be
   representative of all of Helvig? Why or why not?
-  - (Yes or no.)
-  - (Write your ‘why’ here.)
+  - No we could not use the sequential sample to be representative of
+    all of Helvig.
+  - The sequential sample is not a representative sample of Helvig
+    because it only sampled the first 25 houses which has a location
+    bias.
 
 ### **q9** Discover possible measurements
 
