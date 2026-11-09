@@ -71,38 +71,71 @@ df_numbers_random <-
 
 df_numbers_random %>% 
   pull(house)
+
+group1 <- read.csv("C:/Users/boyde/data-science-F26/data-science-curriculum-build/challenges/data/OLD_Luca_c10.csv")
+group2 <- read.csv("C:/Users/boyde/data-science-F26/data-science-curriculum-build/challenges/data/OLD_Emily_c10.csv")
+
+```
+```{r}
+tgroup1 <- group1 %>% 
+  drop_na() %>% 
+  pull(Weekly.minutes.of.vigorous.physical.exercise)
+
+tgroup2 <- group2 %>% 
+  drop_na() %>%
+  pull(Weekly.minutes.of.vigorous.physical.exercise)
+
+rgroup1 <- group1 %>% 
+  drop_na() %>% 
+  pull(Tiredness.1.10)
+rgroup2 <- group2 %>% 
+  drop_na() %>%
+  pull(Tiredness.1.10)
+
+t_test_result <- t.test(tgroup1,tgroup2)
+t_test_result
+other_result <- t.test(rgroup1,rgroup2)
+other_result
+
 ```
 
 
 #### Population
 
-- (What population are you going to study?)
+Two different cities on two different islands where we survied 25 houses from each city. 
   - All of the Islanders? Only the residents of Helvig? Participants meeting certain criteria (in which case, you need to list *covariates*)?
 
 #### Quantity of interest
 
-- (Write your quantity of interest here)
+Our quantity of interest is how tired the villagers are on a scale from 1 to 10. 
 
 #### Covariates
 
-- (Write any relevant covariates here)
-- (There's probably more than one!)
-
+- Villagers must be over the age of 5 and concent to the study. 
+- Age of the person
 #### Observation or experiment?
 
 The Islands allows you to ask islanders to complete tasks. If you just take measurements on your participants, then it's an *observational study*. But if you also introduce something that's meant to change the outcome of a measurement (e.g., drinking coffee before taking a test), that's called an *experimental study*. You need to decide whether your study is observational or experimental.
 
-- (Observation or experiment?)
+- This is an observational study were we ask how many mintutes of vigerous physical activity per week and how tired the villager is on a scale from one to ten. 
 
 #### Question / Hypothesis
 
-- (Write your question / hypothesis here)
-  - This could be an observational question, like "How are X and Y related in the population?"
-  - This could be an experimental question, like "What effect does X have on Y in the population?"
+- How is the amount of vigorous physical activity done per week in
+minutes related to the amount of tiredness that a villager feels on a
+scale of 1 to 10?
 
 #### Sampling plan
+- We will start by writing down the number of houses in both Mahuti and Vardo. At the time data collection Mahuti had 863 houses and Vardo had 833 houses. 
+- We will start by randomly generating a list of 25 houses in each city to collect data from. 
+- For each houses number generated, every member of the household over the age of five will be asked to consent to the study. 
 
-- (What steps will you take to collect the data?)
+
+
+
+
+
+(What steps will you take to collect the data?)
   - Be specific. For instance, if you're going to collect a random sample, how will you enumerate all of the things to be sampled?
   - Write a protocol. Document step-by-step instructions that your team will follow. That way, you can feasibly split up data collection among the whole team, while making sure each team member doesn't make ad hoc decisions that introduce bias into your results.
 - (How will you ensure the data is representative of your chosen population?)
