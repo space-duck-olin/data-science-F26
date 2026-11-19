@@ -588,7 +588,8 @@ df_interval_bootstrap
   using the sequential sample (`df_sample_seq`) that would be
   representative of all of Helvig? Why or why not?
   - No we could not use the sequential sample to be representative of
-    all of Helvig.
+    all of Helvig. Using bootstrap would only resample based on the
+    biased sample that we already have.
   - The sequential sample is not a representative sample of Helvig
     because it only sampled the first 25 houses which has a location
     bias.

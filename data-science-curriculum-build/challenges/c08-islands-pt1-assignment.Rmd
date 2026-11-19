@@ -357,7 +357,7 @@ df_interval_bootstrap
 - What is highest possible prevalence for your chosen name, based on the confidence interval you constructed?
   - The highest possible prevalence for my chosen name is 0.2.
 - Note that we used the *random* sample with the bootstrap procedure in this task. Could we use the bootstrap to make a confidence interval using the sequential sample (`df_sample_seq`) that would be representative of all of Helvig? Why or why not?
-  - No we could not use the sequential sample to be representative of all of Helvig.
+  - No we could not use the sequential sample to be representative of all of Helvig. Using bootstrap would only resample based on the biased sample that we already have. 
   - The sequential sample is not a representative sample of Helvig because it only sampled the first 25 houses which has a location bias. 
 
 ### __q9__ Discover possible measurements
