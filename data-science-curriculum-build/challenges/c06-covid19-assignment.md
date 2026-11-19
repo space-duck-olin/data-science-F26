@@ -1,7 +1,7 @@
 COVID-19
 ================
-(Your name here)
-2020-
+Emily Boyd
+2026-11-19
 
 - [Grading Rubric](#grading-rubric)
   - [Individual](#individual)
@@ -270,7 +270,10 @@ the NYT data `df_covid` already contains the `fips`.
 
 ``` r
 ## TASK: Create a `fips` column by extracting the county code
-df_q3 <- df_pop %>% mutate(fips = str_sub(Geography,-5,-1))
+df_q3 <- df_pop %>% 
+  mutate(
+    fips = str_sub(Geography, -5,-1)
+  )
 ```
 
 Use the following test to check your answer.
@@ -297,7 +300,12 @@ print("Very good!")
 
 ``` r
 ## TASK: Join df_covid and df_q3 by fips.
-df_q4 <- left_join(df_covid,df_q3,join_by('fips'))
+df_q4 <- 
+  left_join(
+    df_covid,
+    df_q3,
+    join_by('fips')
+  )
 ```
 
 Use the following test to check your answer.
@@ -493,37 +501,51 @@ include in your summaries,* and justify why!
 
 ``` r
 ## TASK: Compute mean and sd for cases_per100k and deaths_per100k
-mean_casep100K <- df_normalized$cases_per100k %>% mean(na.rm = TRUE)
-mean_deathp100K <- df_normalized$deaths_per100k %>% mean(na.rm = TRUE)
-sd_casep100K <- df_normalized$cases_per100k %>% sd(na.rm = TRUE)
-sd_deathp100K <- df_normalized$deaths_per100k %>% sd(na.rm = TRUE)
+mean_casep100K <- df_normalized %>% 
+  filter(date == "2020-03-13")%>% 
+  pull(cases_per100k) %>%
+  mean(na.rm = TRUE)
+mean_deathp100K <- df_normalized %>% 
+  filter(date == "2020-03-13")%>% 
+  pull(deaths_per100k) %>%
+  mean(na.rm = TRUE)
+sd_casep100K <- df_normalized %>% 
+  filter(date == "2020-03-13")%>% 
+  pull(cases_per100k) %>%
+  sd(na.rm = TRUE)
+sd_deathp100K <- df_normalized %>% 
+  filter(date == "2020-03-13")%>% 
+  pull(deaths_per100k) %>%
+  sd(na.rm = TRUE)
 mean_casep100K
 ```
 
-    ## [1] 9974.675
+    ## [1] 2.289981
 
 ``` r
 mean_deathp100K
 ```
 
-    ## [1] 174.3095
+    ## [1] 0.03396054
 
 ``` r
 sd_casep100K 
 ```
 
-    ## [1] 8448.659
+    ## [1] 4.976192
 
 ``` r
 sd_deathp100K 
 ```
 
-    ## [1] 158.9641
+    ## [1] 0.3112827
 
 - Which rows did you pick?
-  - I picked the rows that have numbers in them.
+  - I picked the rows that have numbers in them on March 13 2022.
 - Why?
-  - I picked these rows becuase R will not do the math with NA values
+  - I picked these rows because R will not do the math with NA values. I
+    was interested in seeing what the cases were like the day that the
+    state of Illinois shut down and school was moved online.
 
 ### **q7** Find and compare the top 10
 
@@ -535,66 +557,80 @@ you found in q6. Note any observations.
 ``` r
 ## TASK: Find the top 10 max cases_per100k counties; report populations as well
 top10cases_per100K <- df_normalized %>% 
-  arrange(desc(cases_per100k)) %>% 
-  select(population,county,date,cases_per100k) %>% 
-  top_n(10)
+  group_by(county, state, fips) %>%
+  summarize(cases_per100k = max(cases_per100k), population = max(population)) %>%
+  arrange(desc(cases_per100k)) %>%
+  head(10)
 ```
 
-    ## Selecting by cases_per100k
+    ## `summarise()` has regrouped the output.
+    ## ℹ Summaries were computed grouped by county, state, and fips.
+    ## ℹ Output is grouped by county and state.
+    ## ℹ Use `summarise(.groups = "drop_last")` to silence this message.
+    ## ℹ Use `summarise(.by = c(county, state, fips))` for per-operation grouping
+    ##   (`?dplyr::dplyr_by`) instead.
 
 ``` r
 top10cases_per100K
 ```
 
-    ## # A tibble: 10 × 4
-    ##    population county date       cases_per100k
-    ##         <int> <chr>  <date>             <dbl>
-    ##  1        102 Loving 2022-05-12       192157.
-    ##  2        102 Loving 2022-05-13       192157.
-    ##  3        102 Loving 2022-05-09       191176.
-    ##  4        102 Loving 2022-05-10       191176.
-    ##  5        102 Loving 2022-05-11       191176.
-    ##  6        102 Loving 2022-05-08       190196.
-    ##  7        102 Loving 2022-05-07       188235.
-    ##  8        102 Loving 2022-05-05       187255.
-    ##  9        102 Loving 2022-05-06       187255.
-    ## 10        102 Loving 2022-05-04       186275.
+    ## # A tibble: 10 × 5
+    ## # Groups:   county, state [10]
+    ##    county                   state        fips  cases_per100k population
+    ##    <chr>                    <chr>        <chr>         <dbl>      <int>
+    ##  1 Loving                   Texas        48301       192157.        102
+    ##  2 Chattahoochee            Georgia      13053        69527.      10767
+    ##  3 Nome Census Area         Alaska       02180        62922.       9925
+    ##  4 Northwest Arctic Borough Alaska       02188        62542.       7734
+    ##  5 Crowley                  Colorado     08025        59449.       5630
+    ##  6 Bethel Census Area       Alaska       02050        57439.      18040
+    ##  7 Dewey                    South Dakota 46041        54317.       5779
+    ##  8 Dimmit                   Texas        48127        54019.      10663
+    ##  9 Jim Hogg                 Texas        48247        50133.       5282
+    ## 10 Kusilvak Census Area     Alaska       02158        49817.       8198
 
 ``` r
 ## TASK: Find the top 10 deaths_per100k counties; report populations as well
 top10deaths_per100K <- df_normalized %>% 
-  arrange(desc(deaths_per100k)) %>% 
-  select(population,county,date,deaths_per100k) %>% 
-  top_n(10)
+  group_by(county, state, fips) %>%
+  summarize(deaths_per100k = max(deaths_per100k), population = max(population)) %>%
+  arrange(desc(deaths_per100k)) %>%
+  head(10)
 ```
 
-    ## Selecting by deaths_per100k
+    ## `summarise()` has regrouped the output.
+    ## ℹ Summaries were computed grouped by county, state, and fips.
+    ## ℹ Output is grouped by county and state.
+    ## ℹ Use `summarise(.groups = "drop_last")` to silence this message.
+    ## ℹ Use `summarise(.by = c(county, state, fips))` for per-operation grouping
+    ##   (`?dplyr::dplyr_by`) instead.
 
 ``` r
 top10deaths_per100K
 ```
 
-    ## # A tibble: 84 × 4
-    ##    population county   date       deaths_per100k
-    ##         <int> <chr>    <date>              <dbl>
-    ##  1        662 McMullen 2022-02-19          1360.
-    ##  2        662 McMullen 2022-02-20          1360.
-    ##  3        662 McMullen 2022-02-21          1360.
-    ##  4        662 McMullen 2022-02-22          1360.
-    ##  5        662 McMullen 2022-02-23          1360.
-    ##  6        662 McMullen 2022-02-24          1360.
-    ##  7        662 McMullen 2022-02-25          1360.
-    ##  8        662 McMullen 2022-02-26          1360.
-    ##  9        662 McMullen 2022-02-27          1360.
-    ## 10        662 McMullen 2022-02-28          1360.
-    ## # ℹ 74 more rows
+    ## # A tibble: 10 × 5
+    ## # Groups:   county, state [10]
+    ##    county            state        fips  deaths_per100k population
+    ##    <chr>             <chr>        <chr>          <dbl>      <int>
+    ##  1 McMullen          Texas        48311          1360.        662
+    ##  2 Galax city        Virginia     51640          1175.       6638
+    ##  3 Motley            Texas        48345          1125.       1156
+    ##  4 Hancock           Georgia      13141          1054.       8535
+    ##  5 Emporia city      Virginia     51595          1022.       5381
+    ##  6 Towns             Georgia      13281          1016.      11417
+    ##  7 Jerauld           South Dakota 46073           986.       2029
+    ##  8 Loving            Texas        48301           980.        102
+    ##  9 Robertson         Kentucky     21201           980.       2143
+    ## 10 Martinsville city Virginia     51690           946.      13101
 
 **Observations**:
 
 - Loving county has small population which makes the cases per 100k much
   larger
+- The numbers here are much larger than the numbers calculated in q6.
 - When did these “largest values” occur?
-  - 2022 from February to May
+  - The largest was the end of the data set.
 
 ## Self-directed EDA
 
@@ -624,6 +660,28 @@ df_normalized %>%
 
 ![](c06-covid19-assignment_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
 
+``` r
+df_normalized %>%
+  filter(
+    state == "Illinois", # Focus on Illinois only
+    !is.na(fips), # fct_reorder2 can choke with missing data
+  ) %>%
+  filter(county %in% c("Cook","Peoria")) %>%
+  ggplot(
+    aes(date, deaths_per100k, color = fct_reorder2(county, date, deaths_per100k))
+  ) +
+  geom_line() +
+  #scale_y_log10() +
+  scale_color_discrete(name = "County") +
+  theme_minimal() +
+  labs(
+    x = "Date",
+    y = "deaths (per 100,000 persons)"
+  )
+```
+
+![](c06-covid19-assignment_files/figure-gfm/unnamed-chunk-1-2.png)<!-- -->
+
 ### Ideas
 
 <!-- ------------------------- -->
@@ -638,10 +696,14 @@ df_normalized %>%
 
 **DO YOUR OWN ANALYSIS HERE** Looking at cases per 100,000k in Cook
 county which is the City of Chicago compared to Peoria County which is
-where the City of Peoria is located. I looked into the point where
-Peoria County surpassed Cook County in January of 2021. Based on looking
-at data from Peoria County is appears that December 2020 to January 2021
-is when restaurants and bars started to re-open for indoor dinning.
+where the City of Peoria is located. I looked into the point when Peoria
+County surpassed Cook County in January of 2021. Based on looking at
+sources from the Illinois Department of Public Health it appears that
+December 2020 to January 2021 is when restaurants and bars started to
+re-open for indoor dinning which could potentially explain part of the
+trend. This trend does not exist for the deaths per 100k graph as it
+takes Peoria until January of 2022 for Peoria county to surpass Cook
+County.
 
 ### Aside: Some visualization tricks
 
