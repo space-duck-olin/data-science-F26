@@ -1,7 +1,7 @@
 ---
 title: "COVID-19"
-author: "(Your name here)"
-date: 2020-
+author: "Emily Boyd"
+date: 2026-11-19
 output:
   github_document:
     toc: true
@@ -334,16 +334,20 @@ Find the top 10 counties in terms of `cases_per100k`, and the top 10 in terms of
 ```{r q7-task}
 ## TASK: Find the top 10 max cases_per100k counties; report populations as well
 top10cases_per100K <- df_normalized %>% 
-  arrange(desc(cases_per100k)) %>% 
-  mutate(population = max(population))%>%
-  select(population,county,date,cases_per100k) %>% 
-  top_n(10)
+  group_by(county, state, fips) %>%
+  summarize(cases_per100k = max(cases_per100k), population = max(population)) %>%
+  arrange(desc(cases_per100k)) %>%
+  head(10)
 top10cases_per100K
+
+
+
 ## TASK: Find the top 10 deaths_per100k counties; report populations as well
 top10deaths_per100K <- df_normalized %>% 
-  arrange(desc(deaths_per100k)) %>% 
-  select(population,county,date,deaths_per100k) %>% 
-  top_n(10)
+  group_by(county, state, fips) %>%
+  summarize(deaths_per100k = max(deaths_per100k), population = max(population)) %>%
+  arrange(desc(deaths_per100k)) %>%
+  head(10)
 top10deaths_per100K
 ```
 
@@ -352,7 +356,7 @@ top10deaths_per100K
 - Loving county has small population which makes the cases per 100k much larger
 - The numbers here are much larger than the numbers calculated in q6.
 - When did these "largest values" occur?
-  - 2022 from February to May
+  - The largest was the end of the data set. 
 
 ## Self-directed EDA
 <!-- ------------------------- -->
@@ -377,6 +381,24 @@ df_normalized %>%
     y = "cases (per 100,000 persons)"
   )
 
+df_normalized %>%
+  filter(
+    state == "Illinois", # Focus on Illinois only
+    !is.na(fips), # fct_reorder2 can choke with missing data
+  ) %>%
+  filter(county %in% c("Cook","Peoria")) %>%
+  ggplot(
+    aes(date, deaths_per100k, color = fct_reorder2(county, date, deaths_per100k))
+  ) +
+  geom_line() +
+  #scale_y_log10() +
+  scale_color_discrete(name = "County") +
+  theme_minimal() +
+  labs(
+    x = "Date",
+    y = "deaths (per 100,000 persons)"
+  )
+
 
 ```
 
@@ -393,7 +415,10 @@ df_normalized %>%
 
 **DO YOUR OWN ANALYSIS HERE**
 Looking at cases per 100,000k in Cook county which is the City of Chicago compared to Peoria County which is where the City of Peoria is located.
-I looked into the point where Peoria County surpassed Cook County in January of 2021. Based on looking at data from Peoria County is appears that December 2020 to January 2021 is when restaurants and bars started to re-open for indoor dinning.
+I looked into the point when Peoria County surpassed Cook County in January of 2021. Based on looking at sources from the Illinois Department of Public Health it appears that December 2020 to January 2021 is when restaurants and bars started to re-open for indoor dinning which could potentially explain part of the trend. This trend does not exist for the deaths per 100k graph as it takes Peoria until January of 2022 for Peoria county to surpass Cook County. 
+
+
+
 
 ### Aside: Some visualization tricks
 <!-- ------------------------- -->
