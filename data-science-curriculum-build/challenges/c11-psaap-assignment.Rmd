@@ -72,11 +72,14 @@ Figure 1. An example simulation, frozen at a specific point in time. An initial 
 
 ```{r q1-task}
 ## TODO: Perform your initial checks
+df_psaap %>% glimpse()
+df_psaap %>% summary()
 ```
 
 **Observations**:
 
-- (Take notes here!)
+- There is 22 variables. 
+- The simulation ran 35 times. Each different index number is a different simulation run. 
 
 The important variables in this dataset are:
 
@@ -113,6 +116,10 @@ The primary output of interest is `T_norm = (avg_T - T_f) / T_f`, the normalized
 ## TODO: Visualize the data in df_psaap with T_norm against x;
 ##       design your visual to handle the multiple simulations,
 ##       each identified by different values of idx
+df_psaap %>% 
+  group_by(idx) %>%
+ggplot(aes(x,T_norm,color = as.factor(idx))) +
+  geom_line()
 ```
 
 ## Modeling
@@ -149,18 +156,21 @@ fit_nonphysical <-
 
 ## TODO: Compute a measure of accuracy for each fit above;
 ##       compare their relative performance
+mse(fit_baseline,df_validate)
+mse(fit_cheat, df_validate)
+mse(fit_nonphysical,df_validate)
 ```
 
 **Observations**:
 
 - Which model is *most accurate*? Which is *least accurate*?
-  - (Your response here)
+  - Fit cheat is the most accurate model. The fit nonphysical is the least accurate. 
 - What *Category* of variable is `avg_T`? Why is it such an effective predictor?
-  - (Your response here)
+  - Avg_T is an output variable. It is an effective predictor because it is part of the calculation of T_norm.
 - Would we have access to `avg_T` if we were trying to predict a *new* value of `T_norm`? Is `avg_T` a valid predictor?
-  - (Your response here)
+  - We would have access to avg_T is we were trying to predict a new value T_norm. It is not a valid predictor becuase avg_T is used in the calucation of T_norm
 - What *Category* of variable is `idx`? Does it have any physical meaning?
-  - (Your response here)
+  - Idx is a metadata. It is not have any physical meaning as it is a simulation run counter. 
 
 ### __q4__ Interpret this model
 
@@ -174,12 +184,13 @@ fit_q4 <-
   df_train %>% 
   lm(formula = T_norm ~ . - idx - avg_q - avg_T - rms_T)
 ## TODO: Use some of the functions we learned in e-model01 through e-model03
+rsquare(fit_q4,df_validate)
 ```
 
 **Observations**:
 
 - Which columns are excluded in the model formula above? What categories do these belong to? Why are these important quantities to leave out of the model?
-  - (Your response here)
+  - The columns that are excluded in the model formula above are idx, avg_q, avg_T, and rms_T. The category of variables that are excluded are the outputs of the simulation and the metadata from the simulation
 - Which inputs are *statistically significant*, according to the model?
   - (Your response here)
 - What is the regression coefficient for `x`? What about the regression coefficient for `T_f`?
