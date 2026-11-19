@@ -184,7 +184,14 @@ fit_q4 <-
   df_train %>% 
   lm(formula = T_norm ~ . - idx - avg_q - avg_T - rms_T)
 ## TODO: Use some of the functions we learned in e-model01 through e-model03
-rsquare(fit_q4,df_validate)
+fit_q4 %>% rsquare(df_validate)
+fit_q4 %>% summary()
+df_psaap %>% 
+  pull(x) %>% 
+  sd()
+df_psaap %>%
+  pull(T_f) %>%
+  sd()
 ```
 
 **Observations**:
@@ -192,15 +199,15 @@ rsquare(fit_q4,df_validate)
 - Which columns are excluded in the model formula above? What categories do these belong to? Why are these important quantities to leave out of the model?
   - The columns that are excluded in the model formula above are idx, avg_q, avg_T, and rms_T. The category of variables that are excluded are the outputs of the simulation and the metadata from the simulation
 - Which inputs are *statistically significant*, according to the model?
-  - (Your response here)
+  - According to the model, I_0, x,L,W are significangt inputs.
 - What is the regression coefficient for `x`? What about the regression coefficient for `T_f`?
-  - (Your response here)
+  - The regression coefficent for x is 1.018e+00. The regression coefficent for T_f is  -3.791e-04.
 - What is the standard deviation of `x` in `df_psaap`? What about the standard deviation of `T_f`? 
-  - (Your response here)
+  - The standard deviation of x in df_psaap is 0.2805121. The standard deviation of T_f in df_psaap is 38.94204.
 - How do these standard deviations relate to the regression coefficients for `x` and `T_f`?
-  - (Your response here)
+  - The larger standard deviation such as T_f leads to a smaller regression coefficent. The small standard deviation for x leads to a larger regression coefficent. 
 - Note that literally *all* of the inputs above have *some* effect on the output `T_norm`; so they are all "significant" in that sense. What does this tell us about the limitations of statistical significance for interpreting regression coefficients?
-  - (Your response here)
+  - Since all variables have an impact of the output T_norm, only using the statiscally significant varibles would not leave us with the best fit regression. 
 
 ## Contrasting CI and PI
 
@@ -308,11 +315,11 @@ bind_rows(
 **Observations**:
 
 - Which model tends to be more accurate? How can you tell from this predicted-vs-actual plot?
-  - (Your response here)
+  - The model from q4 tends to be more accurate than the x only model. 
 - Which model tends to be *more confident* in its predictions? Put differently, which model has *narrower prediction intervals*?
-  - (Your response here)
+  - The model from q4 tends to be more confident in its predictions. 
 - How many predictors does the `fit_simple` model need in order to make a prediction? What about your model `fit_q4`?
-  - (Your response here)
+  - The fit simple model only needs x in order to make a prediction. The fit_q4 model needs x, L, W, U_0, N_p, T_f, rho_f, mu_f,lam_f, C_fp, rho_p, d_p, C_pv,h,I_0, and eps_p in order to make a predictions
 
 Based on these results, you might be tempted to always throw every reasonable variable into the model. For some cases, that might be the best choice. However, some variables might be *outside our control*; for example, variables involving human behavior cannot be fully under our control. Other variables may be *too difficult to measure*; for example, it is *in theory* possible to predict the strength of a component by having detailed knowledge of its microstructure. However, it is *patently infeasible* to do a detailed study of *every single component* that gets used in an airplane.
 
@@ -347,22 +354,45 @@ pr_level <- 0.8
 #        use the validation data to check your uncertainty estimates, and 
 #        make a recommendation on a *dependable range* of values for T_norm
 #        at the point `df_design`
-fit_q6 <- NA
+fit_q6 <- 
+  df_train %>%
+  lm(data = ., formula = T_norm ~ x + L + W + U_0)
 
+number <- df_design %>% 
+  add_uncertainties(
+    model = fit_q6, 
+    interval = "prediction", 
+    prefix = "pi", 
+    level = pr_level
+  )
+  
+df_validate %>% 
+  add_uncertainties(
+    fit_q6, 
+    interval = "prediction", 
+    prefix = "pi", 
+    level = pr_level
+    ) %>% 
+  summarise(
+    fraction_in = mean(pi_lwr <= T_norm & T_norm <= pi_upr)
+  )
+fit_q6 %>% mse(df_train)
+fit_q6 %>% rsquare(df_train)
+number
 ```
 
 **Recommendation**:
 
 - How much do you trust your model? Why?
-  - (Your response here)
+  - I only kind of trust my model becuase it is only based on the few factors form the simulations. When looking at the prediction intervals, it is a reasonable model. 
 - What kind of interval---confidence or prediction---would you use for this task, and why?
-  - (Your response here)
+  - I used a prediction interval because I am working with new observations. 
 - What fraction of validation cases lie within the intervals you predict? (NB. Make sure to calculate your intervals *based on the validation data*; don't just use one single interval!) How does this compare with `pr_level`?
-  - (Your response here)
+  - 0.93 fit with in my confidence interval which is greater than pr_level.
 - What interval for `T_norm` would you recommend the design team to plan around?
-  - (Your response here)
+  - I would recommend the design team to plan around 1.46 to 2.30.
 - Are there any other recommendations you would provide?
-  - (Your response here)
+  - Be mindful to make sure that the values that you are controlling are the values that you planed for.
 
 *Bonus*: One way you could take this analysis further is to recommend which other variables the design team should tightly control. You could do this by fixing values in `df_design` and adding them to the model. An exercise you could carry out would be to systematically test the variables to see which ones the design team should more tightly control.
 

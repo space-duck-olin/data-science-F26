@@ -1,0 +1,64 @@
+---
+title: "Regression Activity Notebook"
+format: html
+---
+
+# Setup
+ 
+The following chunks set up the activity.
+
+```{r}
+library(tidyverse)
+
+# Make sure the dataset is in the same folder as this notebook
+filename <- "GaltonsFamilyHeights.txt"
+df_raw <- read_table(filename)
+```
+
+```{r}
+df_data <- 
+  df_raw %>% 
+  mutate(across(-gender, as.numeric))
+df_data
+```
+
+
+```{r}
+df_data %>% 
+  filter(gender %in% c("male", "female")) %>% 
+  
+  ggplot(aes(midparentHeight, childHeight, color = gender)) +
+  geom_point() +
+  geom_smooth(method = "lm", linetype = "dashed", se = FALSE) +
+  scale_color_discrete(name = "Child") +
+  theme_minimal() +
+  theme(
+    legend.position = c(0.9, 0.1),
+    aspect.ratio = 0.75,
+  ) +
+  labs(
+    x = "Parent Mid-Height (in)",
+    y = "Child Height (in)",
+    caption = "Mid-height is the average of mother and father heights."
+  )
+```
+
+# Regression
+
+Modify the formula below to change the regression model.
+
+```{r}
+df_data %>% 
+  lm(
+    # Modify the regression formula to change the model
+    formula = childHeight ~ father + mother + gender
+  ) %>% 
+  summary()
+df_data %>% 
+  lm(
+    # Modify the regression formula to change the model
+    formula = childHeight ~ midparentHeight + gender
+  ) %>% 
+  summary()
+```
+
